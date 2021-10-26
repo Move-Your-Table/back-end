@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { ObjectId } from 'mongodb'
+import { ObjectId } from 'mongodb';
 
 export const BuildingSchema = new Schema({
     _id: ObjectId,
