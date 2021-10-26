@@ -6,7 +6,7 @@ import { BuildingType } from './dto/building.dto';
 
 @Injectable()
 export class BuildingsService {
-    constructor(@InjectModel('Building') private buildingModel : Model<Building>) {}
+    constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
     async findAll(): Promise<BuildingType[]> {
         return await this.buildingModel.find().exec();

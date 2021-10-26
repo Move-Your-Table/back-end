@@ -10,9 +10,10 @@ import { MongooseModule } from '@nestjs/mongoose';
     GraphQLModule.forRoot({
       autoSchemaFile: "schema.gql",
     }),
-    MongooseModule.forRoot("mongodb://localhost/MoveYourTable")
+    MongooseModule.forRoot("mongodb://localhost/MoveYourTable"),
+    BuildingsModule
   ],
-  controllers: [],
-  providers: [],
+  controllers: [AppController],
+  providers: [AppService],
 })
 export class AppModule {}

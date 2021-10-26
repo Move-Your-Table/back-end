@@ -1,0 +1,13 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type BuildingType {
+  _id: ID!
+  name: String!
+  address: String!
+}
+
+type Query {
+  buildings: [BuildingType!]!
+}
