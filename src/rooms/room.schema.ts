@@ -1,6 +1,6 @@
 import { Schema } from 'mongoose';
-import { IncidentReport } from '../incidentreports/incidentreports.interface';
-import { Desk } from '../desks/interfaces/desks.interface';
+import { IncidentReport } from '../incidentreports/incidentreport.interface';
+import { Desk } from '../desks/interfaces/desk.interface';
 
 export const RoomSchema = new Schema({
     name: String,

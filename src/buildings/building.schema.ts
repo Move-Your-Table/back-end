@@ -1,7 +1,7 @@
 import { Schema } from 'mongoose';
 import { ObjectId } from 'mongodb';
 import { Room } from '../rooms/interfaces/room.interface';
-import { IncidentReport } from '../incidentreports/incidentreports.interface';
+import { IncidentReport } from '../incidentreports/incidentreport.interface';
 
 export const BuildingSchema = new Schema({
     _id: ObjectId,

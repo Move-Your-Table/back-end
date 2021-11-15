@@ -1,6 +1,6 @@
 import { ObjectType, Field } from '@nestjs/graphql';
-import { IncidentReportType } from 'src/incidentreports/dto/incidentreports.dto';
-import { DeskType } from '../../desks/dto/desks.dto';
+import { IncidentReportType } from 'src/incidentreports/dto/incidentreport.dto';
+import { DeskType } from '../../desks/dto/desk.dto';
 
 @ObjectType()
 export class RoomType {

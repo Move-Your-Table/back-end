@@ -7,10 +7,18 @@ type IncidentReportType {
   message: String!
 }
 
+type BookingType {
+  user_id: Float!
+  start_time: String!
+  end_time: String!
+  public: Boolean!
+}
+
 type DeskType {
   name: String!
   last_used: String!
   incidentReports: [IncidentReportType!]!
+  bookings: [BookingType!]!
 }
 
 type RoomType {
