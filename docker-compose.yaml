@@ -1,0 +1,12 @@
+version: "3.8"
+
+services:
+  mongodb:
+    image: mongo
+    restart: always
+    container_name: MongoDB
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
+      MONGO_INITDB_DATABASE: ${MONGO_INITDB_DATABASE}
+
