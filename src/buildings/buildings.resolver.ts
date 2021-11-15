@@ -11,9 +11,4 @@ export class BuildingsResolver {
     async buildings(): Promise<BuildingType[]> {
         return this.buildingService.findAll();
     }
-
-    @ResolveField(returns => [RoomType])
-    room(): Promise<RoomType> {
-        return this.room[0];
-    }
 }

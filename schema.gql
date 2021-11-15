@@ -2,11 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type IncidentReportType {
+  user_id: Float!
+  message: String!
+}
+
+type DeskType {
+  name: String!
+  last_used: String!
+  incidentReports: [IncidentReportType!]!
+}
+
 type RoomType {
   name: String!
   last_used: DateTime!
   floor: Float!
   features: String!
+  incidentReports: [IncidentReportType!]!
+  desks: [DeskType!]!
 }
 
 """
@@ -19,7 +32,6 @@ type BuildingType {
   name: String!
   address: String!
   rooms: [RoomType!]!
-  room: [RoomType!]!
 }
 
 type Query {
