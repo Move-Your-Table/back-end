@@ -1,7 +1,7 @@
-import { Resolver, Query } from '@nestjs/graphql';
+import { Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
+import { RoomType } from '../rooms/dto/room.dto';
 import { BuildingsService } from './buildings.service';
 import { BuildingType } from './dto/building.dto';
-import { Building } from './interfaces/building.interface';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -10,5 +10,10 @@ export class BuildingsResolver {
     @Query(returns => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
         return this.buildingService.findAll();
+    }
+
+    @ResolveField(returns => [RoomType])
+    room(): Promise<RoomType> {
+        return this.room[0];
     }
 }
