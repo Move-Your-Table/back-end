@@ -5,6 +5,9 @@ services:
     image: mongo:5.0.4
     restart: always
     container_name: MongoDB
+    build:
+      dockerfile: /docker/Mongo
+      context: .
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
@@ -17,3 +20,21 @@ services:
     container_name: RabbitMQ
     ports:
       - ${RABBITMQ_PORT}:5672
+  nestjs:
+    image: node:lts-alpine3.14
+    restart: always
+    container_name: Nest.JS
+    ports:
+      - ${NESTJS_PORT}:3000
+    build:
+      dockerfile: /docker/Nest
+      context: .
+    volumes:
+      - .:/app
+      - node_modules:/src/node_modules
+    depends_on:
+      - mongodb
+      - rabbimq
+
+volumes:
+  node_modules: {}

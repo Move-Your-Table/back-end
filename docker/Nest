@@ -1,0 +1,8 @@
+FROM node:lts-alpine3.14
+
+WORKDIR /app
+ADD package.json /app
+RUN npm i --silent
+ADD . /app
+CMD [ "npm", "run", "start:dev" ]
+
