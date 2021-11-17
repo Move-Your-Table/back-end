@@ -5,6 +5,8 @@ import { ConfigModule } from '@nestjs/config';
 import { BuildingsModule } from './buildings/buildings.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { MongooseModule } from '@nestjs/mongoose';
+import { RoomsModule } from './rooms/rooms.module';
+import { DesksModule } from './desks/desks.module';
 
 @Module({
   imports: [
@@ -14,6 +16,8 @@ import { MongooseModule } from '@nestjs/mongoose';
     }),
     ConfigModule.forRoot(),
     BuildingsModule,
+    RoomsModule,
+    DesksModule,
     MongooseModule.forRoot(process.env.MONGOOSE_CONNECTIONSTRING)
   ],
   controllers: [AppController],
