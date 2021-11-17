@@ -34,7 +34,7 @@ services:
       context: .
     volumes:
       - .:/app
-      - node_modules:/src/node_modules
+      - node_modules:/app/src/node_modules
     depends_on:
       - mongodb
       - rabbimq
