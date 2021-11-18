@@ -1,0 +1,10 @@
+FROM node:lts-alpine3.14
+
+WORKDIR /app
+ADD package.json /app
+RUN npm i --silent
+ADD . /app
+
+EXPOSE 3000
+CMD [ "npm", "run", "start:plain" ]
+
