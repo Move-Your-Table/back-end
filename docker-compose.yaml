@@ -7,7 +7,7 @@ services:
     restart: always
     container_name: MongoDB
     build:
-      dockerfile: /docker/Mongo
+      dockerfile: /docker/Mongo_Dockerfile
       context: .
     environment:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
@@ -30,7 +30,7 @@ services:
     ports:
       - ${NESTJS_PORT}:3000
     build:
-      dockerfile: /docker/Nest
+      dockerfile: /docker/Nest_Dockerfile
       context: .
     volumes:
       - .:/app
