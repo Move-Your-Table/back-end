@@ -34,10 +34,12 @@ services:
       context: .
     volumes:
       - .:/app
-      - node_modules:/app/src/node_modules
+      - node_modules:/app/node_modules
+      - dist:/app/dist
     depends_on:
       - mongodb
       - rabbimq
 
 volumes:
   node_modules: {}
+  dist: {}

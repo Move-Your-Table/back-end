@@ -16,28 +16,41 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
    ```
 3. In the root of the directory, use the following command:
     ```bash
-    $ npm run start:dev
+    $ npm run start:container:dev
     ```
 ✅ Done! Your application should be configured & up and running. Start developing!
-> 🚨 **Note:** For some reason, Nest.JS takes a lot of time to recompile it's code within a docker container, so the development server will run your code locally. If you want to develop your code within a **fully containerized** environment, you can run the following command:
->
-> ```
-> $ npm run start:container:dev
-> ```
 
 ## Available `start` commands
-- **`npm run start:container:dev`**
+### Preferred command
+- **`npm run start:dev`**
     
-    Start a fully **containerized** development server **with** hot-reloading capabilities.
-- **`npm run start`**
+  Start a fully **containerized** development server **with** hot-reloading capabilities.
+
+### Run app code locally
+- **`npm run start:local`**
   
   Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
-- **`npm run start:dev`**
+
+- **`npm run start:local:dev`**
   
   Start a development server **with** hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
-- **`npm run start:prod`**
+
+- **`npm run start:local:prod`**
   
   Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.
+
+### Plain commands
+- **`npm run start:plain`**
+  
+  Starts a development server without any hot-reloading capabilities, **without any of the necessary containers.** 
+
+- **`npm run start:plain:dev`**
+  
+  Starts a development server **with** hot-reloading capabilities, **without any of the necessary containers.** 
+
+- **`npm run start:plain:prod`**
+  
+  Starts a production-ready server, **without any of the necessary containers.** 
 
 ## Available `Test` commands
 - **`npm run test`**
