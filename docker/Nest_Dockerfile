@@ -1,10 +1,10 @@
 FROM node:lts-alpine3.14
 
 WORKDIR /app
-COPY package.json /app
+COPY package.json .
 RUN npm i --silent
 COPY . /app
 
 EXPOSE 3000
-CMD [ "npm", "run", "start:plain" ]
+CMD [ "npm", "run", "start:plain:dev" ]
 
