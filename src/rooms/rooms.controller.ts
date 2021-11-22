@@ -1,24 +1,24 @@
 import { Controller, Get } from "@nestjs/common";
-import { BuildingsService } from "../buildings/buildings.service";
+import { RoomService } from "./rooms.service";
 
 
 @Controller()
 export class RoomsController {
-    constructor(private readonly buildingService: BuildingsService) {}
+    constructor(private readonly roomService: RoomService) {}
 
     async getRoomsInBuilding(buildingId: string) {
-        return await this.buildingService.findOne(buildingId, "rooms");
+        return await this.roomService.getRooms(buildingId);
     }
 
     async addRoomInBuilding(buildingId: string, room: object) {
-        return await this.buildingService.addRoom(buildingId, room);
+        return await this.roomService.addRoom(buildingId, room);
     }
 
     async updateRoomInBuilding(buildingId: string, updateRoom: object) {
-        return await this.buildingService.updateRoom(buildingId, updateRoom);
+        return await this.roomService.updateRoom(buildingId, updateRoom);
     }
 
     async deleteRoomInBuilding(buildingId: string, roomName: string) {
-        return await this.buildingService.deleteRoom(buildingId, roomName);
+        return await this.roomService.deleteRoom(buildingId, roomName);
     }
 }
