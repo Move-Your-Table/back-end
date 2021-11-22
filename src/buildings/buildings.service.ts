@@ -2,17 +2,16 @@ import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { Building } from './interfaces/building.interface';
-import { BuildingType } from './dto/building.dto';
 
 @Injectable()
 export class BuildingsService {
     constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
-    async findAll(fields=""): Promise<BuildingType[]> {
-        return await this.buildingModel.find({}, fields).exec();
+    async findAll(): Promise<Building[]> {
+        return await this.buildingModel.find().exec();
     }
 
-    async findOne(id: string): Promise<BuildingType> {
+    async findOne(id: string): Promise<Building> {
         return await this.buildingModel.findOne({_id: id});
     }
 }
