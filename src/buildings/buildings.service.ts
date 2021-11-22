@@ -15,9 +15,13 @@ export class BuildingsService {
         return await this.buildingModel.findOne({_id: id});
     }
 
-    async createOne(name: string, address: string) {
+    async createBuilding(name: string, address: string) {
         const id = new Types.ObjectId;
         return await this.buildingModel.create({"_id": id, "name": name, "address": address});
+    }
+
+    async updateBuilding(building: Building, name: string, address: string) {
+        return await building.updateOne({"name": name, "address": address});
     }
 
 }

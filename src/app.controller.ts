@@ -33,6 +33,21 @@ export class AppController {
     this.acknowledge(context);
   }
 
+  @MessagePattern('updateBuilding')
+  async updateBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const buildingName = data.name;
+    const address = data.address;
+    
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.updateBuilding(building, buildingName, address);
+
+    this.acknowledge(context);
+  }
+
+
 
   @Get("/building")
   getBuilding() : Promise<Building> {

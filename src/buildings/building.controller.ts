@@ -1,5 +1,6 @@
 import { Controller, Get } from "@nestjs/common";
 import { BuildingsService } from "./buildings.service";
+import { Building } from "./interfaces/building.interface";
 
 
 @Controller()
@@ -15,6 +16,10 @@ export class BuildingController {
     }
 
     addBuilding(name: string, address: string) {
-        return this.buildingService.createOne(name, address);
+        return this.buildingService.createBuilding(name, address);
+    }
+
+    updateBuilding(building: Building, name: string, address: string) {
+        return this.buildingService.updateBuilding(building, name, address);
     }
 }
