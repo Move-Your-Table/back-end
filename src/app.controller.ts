@@ -3,6 +3,7 @@ import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/m
 import { BuildingController } from './buildings/building.controller';
 import { Building } from './buildings/interfaces/building.interface';
 import { AddRoom } from './rooms/interfaces/addroom.interface';
+import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
 
 @Controller()
@@ -25,6 +26,26 @@ export class AppController {
     const room = data.room;
 
     await this.roomsController.addRoomInBuilding(buildingId, room);
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('updateRoomInBuilding')
+  async updateRoomInBuilding(@Payload() data: AddRoom, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const room = data.room;
+
+    await this.roomsController.updateRoomInBuilding(buildingId, room);
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('deleteRoomInBuilding')
+  async deleteRoomInBuilding(@Payload() data: DeleteRoom, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+
+    await this.roomsController.deleteRoomInBuilding(buildingId, roomName);
 
     this.acknowledgeMessage(context);
   }

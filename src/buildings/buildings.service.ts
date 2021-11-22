@@ -24,4 +24,28 @@ export class BuildingsService {
             return true;
         });
     }
+
+    async updateRoom(buildingId, updateRoom) {
+        const building = await this.findOne(buildingId);
+        const roomIndex = building.rooms.findIndex(room => room.name == updateRoom.name);
+        
+        building.rooms[roomIndex] = updateRoom;
+    
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
+
+    async deleteRoom(buildingId, roomName) {
+        const building = await this.findOne(buildingId);
+        const roomIndex = building.rooms.findIndex(room => room.name == roomName);
+        
+        building.rooms.splice(roomIndex);
+    
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
 }

@@ -13,4 +13,12 @@ export class RoomsController {
     async addRoomInBuilding(buildingId: string, room: object) {
         return await this.buildingService.addRoom(buildingId, room);
     }
+
+    async updateRoomInBuilding(buildingId: string, updateRoom: object) {
+        return await this.buildingService.updateRoom(buildingId, updateRoom);
+    }
+
+    async deleteRoomInBuilding(buildingId: string, roomName: string) {
+        return await this.buildingService.deleteRoom(buildingId, roomName);
+    }
 }
