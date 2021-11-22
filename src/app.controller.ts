@@ -50,6 +50,53 @@ export class AppController {
     this.acknowledgeMessage(context);
   }
 
+  @MessagePattern('getAllBuildings')
+  async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
+
+    const buildings = await this.buildingController.getAllBuildings();
+    console.log(buildings);
+    this.client.send('getAllBuildings', buildings).subscribe();
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('addBuilding')
+  async addBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingName = data.name;
+    const address = data.address;
+   
+    await this.buildingController.addBuilding(buildingName, address)
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('updateBuilding')
+  async updateBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const buildingName = data.name;
+    const address = data.address;
+    
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.updateBuilding(building, buildingName, address);
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('deleteBuilding')
+  async deleteBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.deleteBuilding(building);
+
+    this.acknowledgeMessage(context);
+  }
+
+
   @Get("/building")
   getBuilding() : Promise<Building> {
       return this.buildingController.getBuilding("619b9bc46c2d9305f675c122");
