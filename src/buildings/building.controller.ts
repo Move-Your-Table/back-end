@@ -9,4 +9,8 @@ export class BuildingController {
     getBuilding(id : string) {
         return this.buildingService.findOne(id);
     }
+
+    getAllBuildings() {
+        return this.buildingService.findAll();
+    }
 }

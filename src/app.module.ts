@@ -14,14 +14,14 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
     BuildingsModule,
     RoomsModule,
     DesksModule,
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}`),
+    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}/MYT?authSource=admin`),
     ClientsModule.register([
       {
         name: 'MYT_SERVICE',
         transport: Transport.RMQ,
         options: {
           urls: [`amqp://localhost:${process.env.RABBITMQ_PORT}`],
-          queue: 'backend_queue',
+          queue: 'frontend_queue',
           noAck: false,
           queueOptions: {
             durable: false,

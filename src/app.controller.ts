@@ -12,8 +12,26 @@ export class AppController {
     console.log(data);
   }
 
+  @MessagePattern('getAllBuildings')
+  async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
+    const channel = context.getChannelRef();
+    const originalMsg = context.getMessage();
+
+    let buildings = await this.buildingController.getAllBuildings();
+    console.log(buildings);
+    this.client.send('getAllBuildings', buildings);
+
+    channel.ack(originalMsg);
+  }
+
+
   @Get("/building")
   getBuilding() : Promise<Building> {
       return this.buildingController.getBuilding("619b9bc46c2d9305f675c122");
+  }
+
+  @Get("/buildings")
+  getBuildings() : Promise<Array<Building>> {
+      return this.buildingController.getAllBuildings();
   }
 }
