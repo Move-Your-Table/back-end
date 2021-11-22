@@ -22,8 +22,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         options: {
           urls: [`amqp://localhost:${process.env.RABBITMQ_PORT}`],
           queue: 'backend_queue',
+          noAck: false,
           queueOptions: {
-            durable: false
+            durable: false,
           },
         },
       },
