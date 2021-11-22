@@ -1,0 +1,15 @@
+import { Controller } from "@nestjs/common";
+import { DesksService } from "./desks.service";
+
+@Controller()
+export class DesksController {
+    constructor(private readonly deskService: DesksService) {}
+
+    async getDesskInRoom(buildingId, roomName) {
+        return await this.deskService.getDesksInRoom(buildingId, roomName);
+    }
+
+    async addDeskToRoom(buildingId, roomName, desk) {
+        return await this.deskService.addDeskToRoom(buildingId, roomName, desk);
+    }
+}

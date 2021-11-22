@@ -2,6 +2,8 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/microservices';
 import { BuildingController } from './buildings/building.controller';
 import { Building } from './buildings/interfaces/building.interface';
+import { DesksController } from './desks/desks.controller';
+import { AddDesk } from './desks/interfaces/add_desk.interface';
 import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
@@ -10,7 +12,8 @@ import { RoomsController } from './rooms/rooms.controller';
 export class AppController {
   constructor(@Inject('MYT_SERVICE') private client: ClientProxy, 
   private readonly buildingController: BuildingController,
-  private readonly roomsController: RoomsController) {}
+  private readonly roomsController: RoomsController,
+  private readonly deskController : DesksController) {}
 
   @MessagePattern('getRoomsInBuilding')
   async getRoomsInBuilding(@Payload() data: string, @Ctx() context: RmqContext) {
@@ -46,6 +49,17 @@ export class AppController {
     const roomName = data.roomName;
 
     await this.roomsController.deleteRoomInBuilding(buildingId, roomName);
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('addDeskToRoom')
+  async addDeskToRoom(@Payload() data: AddDesk, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const desk = data.desk;
+
+    await this.deskController.addDeskToRoom(buildingId, roomName, desk);
 
     this.acknowledgeMessage(context);
   }

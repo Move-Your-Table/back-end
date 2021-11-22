@@ -8,7 +8,13 @@ export class RoomService {
     constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
     async getRooms(buildingId) {
-        return await this.buildingModel.findOne(buildingId, "rooms");
+        const building = await this.buildingModel.findOne({_id: buildingId}, "rooms");
+        return building.rooms;
+    }
+
+    async getRoomByName(buildingId, roomName) {
+        const rooms = await this.getRooms(buildingId);
+        return rooms.find(room => room.name == roomName);
     }
 
     async addRoom(buildingId, room) {
