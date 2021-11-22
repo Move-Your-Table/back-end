@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { Building } from './interfaces/building.interface';
 
 @Injectable()
@@ -14,4 +14,10 @@ export class BuildingsService {
     async findOne(id: string): Promise<Building> {
         return await this.buildingModel.findOne({_id: id});
     }
+
+    async createOne(name: string, address: string) {
+        const id = new Types.ObjectId;
+        return await this.buildingModel.create({"_id": id, "name": name, "address": address});
+    }
+
 }

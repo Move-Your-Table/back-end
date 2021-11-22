@@ -13,4 +13,8 @@ export class BuildingController {
     getAllBuildings() {
         return this.buildingService.findAll();
     }
+
+    addBuilding(name: string, address: string) {
+        return this.buildingService.createOne(name, address);
+    }
 }

@@ -14,12 +14,21 @@ export class AppController {
 
   @MessagePattern('getAllBuildings')
   async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
-    const channel = context.getChannelRef();
-    const originalMsg = context.getMessage();
 
-    let buildings = await this.buildingController.getAllBuildings();
+    const buildings = await this.buildingController.getAllBuildings();
     console.log(buildings);
     this.client.send('getAllBuildings', buildings).subscribe();
+
+    this.acknowledge(context);
+  }
+
+  @MessagePattern('addBuilding')
+  async addBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingName = data.name;
+    const address = data.address;
+   
+    await this.buildingController.addBuilding(buildingName, address)
 
     this.acknowledge(context);
   }
