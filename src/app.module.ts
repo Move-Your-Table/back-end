@@ -13,7 +13,7 @@ import { DesksModule } from './desks/desks.module';
     BuildingsModule,
     RoomsModule,
     DesksModule,
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}`)
+    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}/MYT?authSource=admin`)
   ],
   controllers: [AppController],
   providers: [AppService],
