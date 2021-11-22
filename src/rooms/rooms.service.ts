@@ -1,22 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, Types } from 'mongoose';
-import { Building } from './interfaces/building.interface';
+import { Model } from 'mongoose';
+import { Building } from '../buildings/interfaces/building.interface';
 
 @Injectable()
-export class BuildingsService {
+export class RoomService {
     constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
-    async findAll(): Promise<Building[]> {
-        return await this.buildingModel.find({}, {name: 1, address: 1}).exec();
-    }
-
-    async findOne(id: string, projection: string = null): Promise<Building> {
-        return await this.buildingModel.findOne({_id: id}, projection);
+    async getRooms(buildingId) {
+        return await this.buildingModel.findOne(buildingId, "rooms");
     }
 
     async addRoom(buildingId, room) {
-        const building = await this.findOne(buildingId);
+        const building = await this.buildingModel.findOne({_id: buildingId});
         building.rooms.push(room);
 
         building.save(err => {
@@ -26,7 +22,7 @@ export class BuildingsService {
     }
 
     async updateRoom(buildingId, updateRoom) {
-        const building = await this.findOne(buildingId);
+        const building = await this.buildingModel.findOne({_id: buildingId});
         const roomIndex = building.rooms.findIndex(room => room.name == updateRoom.name);
         
         building.rooms[roomIndex] = updateRoom;
@@ -38,7 +34,7 @@ export class BuildingsService {
     }
 
     async deleteRoom(buildingId, roomName) {
-        const building = await this.findOne(buildingId);
+        const building = await this.buildingModel.findOne({_id: buildingId});
         const roomIndex = building.rooms.findIndex(room => room.name == roomName);
         
         building.rooms.splice(roomIndex);
@@ -48,14 +44,4 @@ export class BuildingsService {
             return true;
         });
     }
-
-    async createBuilding(name: string, address: string) {
-        const id = new Types.ObjectId;
-        return await this.buildingModel.create({"_id": id, "name": name, "address": address});
-    }
-
-    async updateBuilding(building: Building, name: string, address: string) {
-        return await building.updateOne({"name": name, "address": address});
-    }
-
 }
