@@ -11,7 +11,11 @@ export class BuildingsService {
         return await this.buildingModel.find().exec();
     }
 
-    async findOne(id: string): Promise<Building> {
-        return await this.buildingModel.findOne({_id: id});
+    async findOne(id: string, projection: string = null): Promise<Building> {
+        return await this.buildingModel.findOne({_id: id}, projection);
+    }
+
+    async updateOne(filter: object, update: object) {
+        return await this.buildingModel.updateOne(filter, update);
     }
 }
