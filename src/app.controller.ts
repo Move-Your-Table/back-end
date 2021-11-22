@@ -2,6 +2,7 @@ import { Controller, Get, Inject } from '@nestjs/common';
 import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/microservices';
 import { BuildingController } from './buildings/building.controller';
 import { Building } from './buildings/interfaces/building.interface';
+import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
 
 @Controller()
@@ -19,8 +20,11 @@ export class AppController {
   }
 
   @MessagePattern('addRoomInBuilding')
-  async addRoomInBuilding(@Payload() data: string, @Ctx() context: RmqContext) {
-    const newRoom = JSON.parse(data);
+  async addRoomInBuilding(@Payload() data: AddRoom, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const room = data.room;
+
+    await this.roomsController.addRoomInBuilding(buildingId, room);
 
     this.acknowledgeMessage(context);
   }

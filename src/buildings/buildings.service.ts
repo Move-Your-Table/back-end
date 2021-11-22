@@ -15,7 +15,13 @@ export class BuildingsService {
         return await this.buildingModel.findOne({_id: id}, projection);
     }
 
-    async updateOne(filter: object, update: object) {
-        return await this.buildingModel.updateOne(filter, update);
+    async addRoom(buildingId, room) {
+        const building = await this.findOne(buildingId);
+        building.rooms.push(room);
+
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
     }
 }

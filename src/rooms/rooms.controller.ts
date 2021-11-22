@@ -11,6 +11,6 @@ export class RoomsController {
     }
 
     async addRoomInBuilding(buildingId: string, room: object) {
-        return await this.buildingService.updateOne({_id: buildingId}, room);
+        return await this.buildingService.addRoom(buildingId, room);
     }
 }
