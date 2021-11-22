@@ -1,17 +1,19 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppService } from './app.service';
+import { Controller, Get, Inject } from '@nestjs/common';
+import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/microservices';
+import { BuildingController } from './buildings/building.controller';
+import { Building } from './buildings/interfaces/building.interface';
 
 @Controller()
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+  constructor(@Inject('MYT_SERVICE') private client: ClientProxy, private readonly buildingController: BuildingController) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @MessagePattern('test')
+  getTestMessage(@Payload() data: string, @Ctx() context: RmqContext) {
+    console.log(data);
   }
 
-  @Get("/name")
-  getName() : string {
-    return this.appService.getName();
+  @Get("/building")
+  getBuilding() : Promise<Building> {
+      return this.buildingController.getBuilding("619b9bc46c2d9305f675c122");
   }
 }

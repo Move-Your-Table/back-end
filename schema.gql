@@ -1,0 +1,50 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type IncidentReportType {
+  user_id: Float!
+  message: String!
+}
+
+type BookingType {
+  user_id: Float!
+  start_time: String!
+  end_time: String!
+  public: Boolean!
+}
+
+type DeskType {
+  name: String!
+  last_used: String!
+  incidentReports: [IncidentReportType!]!
+  bookings: [BookingType!]!
+}
+
+type RoomType {
+  name: String!
+  last_used: DateTime!
+  floor: Float!
+  features: String!
+  incidentReports: [IncidentReportType!]!
+  desks: [DeskType!]!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type BuildingType {
+  _id: ID!
+  name: String!
+  address: String!
+  rooms: [RoomType!]!
+}
+
+type Query {
+  buildings: [BuildingType!]!
+  building(id: String!): BuildingType!
+  rooms: [RoomType!]!
+  desks: [DeskType!]!
+}
