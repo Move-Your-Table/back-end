@@ -68,10 +68,11 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
 
 |Key|Value explanation|Required?|Value example|
 |---|---|---|---|
+|NESTJS_PORT|The port used by Nest.JS|✔|3000|
 |COMPOSE_PROJECT_NAME|The name of the Docker-Stack|✖|MYT_Backend|
 |MONGO_ROOT_USERNAME|The name of the root user of the database|✔|root|
 |MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|zXnpa&VDpoj6RU|
 |MONGO_INITDB_DATABASE|The name of the database being used|✔|MYT|
 |MONGO_PORT|The port used by MongoDB|✔|27017|
 |RABBITMQ_PORT|The port used by RabbitMQ|✔|5672|
-|NESTJS_PORT|The port used by Nest.JS|✔|3000|
+|RABBITMQ_MANAGEMENT_PORT|The port used by the RabbitMQ management panel|✔|15672|
