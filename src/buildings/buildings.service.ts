@@ -58,4 +58,8 @@ export class BuildingsService {
         return await building.updateOne({"name": name, "address": address});
     }
 
+    async deleteBuilding(building: Building) {
+        return await building.deleteOne({});
+    }
+
 }

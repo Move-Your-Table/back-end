@@ -85,6 +85,16 @@ export class AppController {
     this.acknowledgeMessage(context);
   }
 
+  @MessagePattern('deleteBuilding')
+  async deleteBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.deleteBuilding(building);
+
+    this.acknowledgeMessage(context);
+  }
 
 
   @Get("/building")

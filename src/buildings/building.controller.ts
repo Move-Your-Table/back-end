@@ -22,4 +22,8 @@ export class BuildingController {
     updateBuilding(building: Building, name: string, address: string) {
         return this.buildingService.updateBuilding(building, name, address);
     }
+
+    deleteBuilding(building: Building) {
+        return this.buildingService.deleteBuilding(building);
+    }
 }
