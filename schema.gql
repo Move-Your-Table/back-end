@@ -44,4 +44,7 @@ type BuildingType {
 
 type Query {
   buildings: [BuildingType!]!
+  building(id: String!): BuildingType!
+  rooms: [RoomType!]!
+  desks: [DeskType!]!
 }

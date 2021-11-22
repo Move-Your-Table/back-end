@@ -8,8 +8,8 @@ import { BuildingType } from './dto/building.dto';
 export class BuildingsService {
     constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
-    async findAll(): Promise<BuildingType[]> {
-        return await this.buildingModel.find().exec();
+    async findAll(fields=""): Promise<BuildingType[]> {
+        return await this.buildingModel.find({}, fields).exec();
     }
 
     async findOne(id: string): Promise<BuildingType> {
