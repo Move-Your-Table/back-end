@@ -3,10 +3,10 @@ import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/m
 
 @Controller()
 export class AppController {
-  constructor() {}
+  constructor(@Inject('MYT_SERVICE') private client: ClientProxy,) {}
 
   @MessagePattern('test')
-  getNotifications(@Payload() data: string, @Ctx() context: RmqContext) {
+  getTestMessage(@Payload() data: string, @Ctx() context: RmqContext) {
     console.log(data);
   }
 }
