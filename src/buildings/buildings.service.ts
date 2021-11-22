@@ -8,7 +8,7 @@ export class BuildingsService {
     constructor(@InjectModel('Building') private buildingModel : Model<Building>) {};
 
     async findAll(): Promise<Building[]> {
-        return await this.buildingModel.find().exec();
+        return await this.buildingModel.find({}, {name: 1, address: 1}).exec();
     }
 
     async findOne(id: string): Promise<Building> {

@@ -19,9 +19,9 @@ export class AppController {
 
     let buildings = await this.buildingController.getAllBuildings();
     console.log(buildings);
-    this.client.send('getAllBuildings', buildings);
+    this.client.send('getAllBuildings', buildings).subscribe();
 
-    channel.ack(originalMsg);
+    this.acknowledge(context);
   }
 
 
@@ -33,5 +33,13 @@ export class AppController {
   @Get("/buildings")
   getBuildings() : Promise<Array<Building>> {
       return this.buildingController.getAllBuildings();
+  }
+
+
+  private acknowledge(context) {
+    const channel = context.getChannelRef();
+    const originalMsg = context.getMessage();
+
+    channel.ack(originalMsg);
   }
 }
