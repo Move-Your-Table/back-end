@@ -1,73 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# MYT Back-end
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+The MYT Back-end handles all requested relating to desk, rooms & building information.
 
-## Installation
+## Development Configuration
+### Requirements
+- [Docker (Desktop)](https://www.docker.com/get-started)
+- [Node.JS LTS](https://nodejs.org/en/download/) & NPM
+### Getting started
+1. Copy the `.env.example` file, rename it `.env` and configure it, as described in the [`.env` configuration section](#env-configuration)
+2. Install the needed packages
+   ```bash
+   $ npm install
+   ```
+3. In the root of the directory, use the following command:
+    ```bash
+    $ npm run start:container:dev
+    ```
+✅ Done! Your application should be configured & up and running. Start developing!
 
-```bash
-$ npm install
-```
+## Available `start` commands
+### Preferred command
+- **`npm run start:dev`**
+    
+  Start a fully **containerized** development server **with** hot-reloading capabilities.
 
-## Running the app
+### Run app code locally
+- **`npm run start:local`**
+  
+  Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
 
-```bash
-# development
-$ npm run start
+- **`npm run start:local:dev`**
+  
+  Start a development server **with** hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
 
-# watch mode
-$ npm run start:dev
+- **`npm run start:local:prod`**
+  
+  Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.
 
-# production mode
-$ npm run start:prod
-```
+### Plain commands
+- **`npm run start:plain`**
+  
+  Starts a development server without any hot-reloading capabilities, **without any of the necessary containers.** 
 
-## Test
+- **`npm run start:plain:dev`**
+  
+  Starts a development server **with** hot-reloading capabilities, **without any of the necessary containers.** 
 
-```bash
-# unit tests
-$ npm run test
+- **`npm run start:plain:prod`**
+  
+  Starts a production-ready server, **without any of the necessary containers.** 
 
-# e2e tests
-$ npm run test:e2e
+## Available `Test` commands
+- **`npm run test`**
+  
+  Runs all unit tests
+- **`npm run test:e2e`**
+  
+  Runs all e2e tests
+- **`npm run test:cov`**
+  
+  Runs all coverage tests
+# Miscellaneous
+## `.env` configuration
+> :bulb: An example `.env` is available! Copy `.env.example` and rename it to `.env` to get started.
 
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+|Key|Value explanation|Required?|Value example|
+|---|---|---|---|
+|COMPOSE_PROJECT_NAME|The name of the Docker-Stack|✖|MYT_Backend|
+|MONGO_ROOT_USERNAME|The name of the root user of the database|✔|root|
+|MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|zXnpa&VDpoj6RU|
+|MONGO_INITDB_DATABASE|The name of the database being used|✔|MYT|
+|MONGO_PORT|The port used by MongoDB|✔|27017|
+|RABBITMQ_PORT|The port used by RabbitMQ|✔|5672|
+|NESTJS_PORT|The port used by Nest.JS|✔|3000|

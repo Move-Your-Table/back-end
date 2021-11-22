@@ -1,5 +1,4 @@
 import { Resolver, Query, ResolveField, Parent } from '@nestjs/graphql';
-import { RoomType } from '../rooms/dto/room.dto';
 import { BuildingsService } from './buildings.service';
 import { BuildingType } from './dto/building.dto';
 
