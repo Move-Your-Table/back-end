@@ -6,7 +6,6 @@ import { BuildingsModule } from './buildings/buildings.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsModule } from './rooms/rooms.module';
 import { DesksModule } from './desks/desks.module';
-import { RabbitMQModule } from './rabbitmq/rabbitmq.module';
 
 @Module({
   imports: [

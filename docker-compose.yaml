@@ -17,11 +17,12 @@ services:
       - ${MONGO_PORT}:27017
   rabbitmq:
     profiles: ["local-dev", "container-dev"]
-    image: rabbitmq:3.8.25-alpine
+    image: rabbitmq:3.8.25-management-alpine
     restart: always
     container_name: RabbitMQ
     ports:
       - ${RABBITMQ_PORT}:5672
+      - ${RABBITMQ_MANAGEMENT_PORT}:15672
   nestjs:
     profiles: ["container-dev"]
     image: myt/back-end:1.0
