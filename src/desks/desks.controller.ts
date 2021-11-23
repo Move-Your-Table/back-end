@@ -5,8 +5,12 @@ import { DesksService } from "./desks.service";
 export class DesksController {
     constructor(private readonly deskService: DesksService) {}
 
-    async getDeskInRoom(buildingId, roomName) {
+    async getDesksInRoom(buildingId, roomName) {
         return await this.deskService.getDesksInRoom(buildingId, roomName);
+    }
+
+    async getDeskInRoom(buildingId, roomName, deskName) {
+        return await this.deskService.getDeskInRoom(buildingId, roomName, deskName);
     }
 
     async addDeskToRoom(buildingId, roomName, desk) {

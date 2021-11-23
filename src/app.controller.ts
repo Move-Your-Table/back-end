@@ -6,6 +6,7 @@ import { DesksController } from './desks/desks.controller';
 import { AddDesk } from './desks/interfaces/add_desk.interface';
 import { DeleteDesk } from './desks/interfaces/delete_desk.interface';
 import { EditDesk } from './desks/interfaces/edit_desk.interface';
+import { GetDesks } from './desks/interfaces/get_desks_interface';
 import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
 import { EditRoom } from './rooms/interfaces/editroom.interface';
@@ -53,6 +54,16 @@ export class AppController {
     const roomName = data.roomName;
 
     await this.roomsController.deleteRoomInBuilding(buildingId, roomName);
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('getDesksInRoom')
+  async getDesksInRoom(@Payload() data: GetDesks, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+
+    console.log(await this.deskController.getDesksInRoom(buildingId, roomName));
 
     this.acknowledgeMessage(context);
   }
