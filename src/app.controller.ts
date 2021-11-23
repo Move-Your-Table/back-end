@@ -8,6 +8,7 @@ import { DeleteDesk } from './desks/interfaces/delete_desk.interface';
 import { EditDesk } from './desks/interfaces/edit_desk.interface';
 import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
+import { EditRoom } from './rooms/interfaces/editroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
 
 @Controller()
@@ -36,11 +37,12 @@ export class AppController {
   }
 
   @MessagePattern('updateRoomInBuilding')
-  async updateRoomInBuilding(@Payload() data: AddRoom, @Ctx() context: RmqContext) {
+  async updateRoomInBuilding(@Payload() data: EditRoom, @Ctx() context: RmqContext) {
     const buildingId = data.buildingId;
+    const roomName = data.roomName;
     const room = data.room;
 
-    await this.roomsController.updateRoomInBuilding(buildingId, room);
+    await this.roomsController.updateRoomInBuilding(buildingId, roomName, room);
 
     this.acknowledgeMessage(context);
   }

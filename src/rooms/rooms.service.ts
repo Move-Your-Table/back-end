@@ -27,9 +27,9 @@ export class RoomService {
         });
     }
 
-    async updateRoom(buildingId, updateRoom) {
+    async updateRoom(buildingId, roomName, updateRoom) {
         const building = await this.buildingModel.findOne({_id: buildingId});
-        const roomIndex = building.rooms.findIndex(room => room.name == updateRoom.name);
+        const roomIndex = building.rooms.findIndex(room => room.name == roomName);
         
         building.rooms[roomIndex] = updateRoom;
     
