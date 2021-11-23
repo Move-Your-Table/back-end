@@ -29,4 +29,17 @@ export class DesksService {
             return true;
         });
     }
+    
+    async deleteDeskInRoom(buildingId, roomName, deskName) {
+        const building = await this.buildingModel.findOne({_id: buildingId});
+        const room = building.rooms.find(room => room.name == roomName);
+        const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
+
+        room.desks.splice(deskIndex, 1);
+
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
 }
