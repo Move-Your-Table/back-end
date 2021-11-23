@@ -13,6 +13,10 @@ export class DesksController {
         return await this.deskService.addDeskToRoom(buildingId, roomName, desk);
     }
 
+    async editDeskInRoom(buildingId, roomName, deskName, desk) {
+        return await this.deskService.editDeskInRoom(buildingId, roomName, deskName, desk);
+    }
+
     async deleteDeskInRoom(buildingId, roomName, deskName) {
         return await this.deskService.deleteDeskInRoom(buildingId, roomName, deskName);
     }

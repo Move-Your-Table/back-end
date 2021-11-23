@@ -29,6 +29,19 @@ export class DesksService {
             return true;
         });
     }
+
+    async editDeskInRoom(buildingId, roomName, deskName, editedDesk) {
+        const building = await this.buildingModel.findOne({_id: buildingId});
+        const room = building.rooms.find(room => room.name == roomName);
+        const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
+
+        room.desks[deskIndex] = editedDesk;
+
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
     
     async deleteDeskInRoom(buildingId, roomName, deskName) {
         const building = await this.buildingModel.findOne({_id: buildingId});
