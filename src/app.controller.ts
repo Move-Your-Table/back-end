@@ -19,6 +19,27 @@ export class AppController {
   private readonly roomsController: RoomsController,
   private readonly deskController : DesksController) {}
 
+  @MessagePattern('getAllBuildings')
+  async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
+
+    const buildings = await this.buildingController.getAllBuildings();
+    console.log(buildings);
+    this.client.send('getAllBuildings', buildings).subscribe();
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('deleteBuilding')
+  async deleteBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.deleteBuilding(building);
+
+    this.acknowledgeMessage(context);
+  }
+
   @MessagePattern('getRoomsInBuilding')
   async getRoomsInBuilding(@Payload() data: string, @Ctx() context: RmqContext) {
     const rooms = await this.roomsController.getRoomsInBuilding(data);
@@ -58,14 +79,37 @@ export class AppController {
     this.acknowledgeMessage(context);
   }
 
+  @MessagePattern('addBuilding')
+  async addBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingName = data.name;
+    const address = data.address;
+   
+    await this.buildingController.addBuilding(buildingName, address)
+
+    this.acknowledgeMessage(context);
+  }
+
+  @MessagePattern('updateBuilding')
+  async updateBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
+
+    const buildingId = data.id;
+    const buildingName = data.name;
+    const address = data.address;
+    
+    const building = await this.buildingController.getBuilding(buildingId);
+
+    await this.buildingController.updateBuilding(building, buildingName, address);
+
+    this.acknowledgeMessage(context);
+  }
+
   @MessagePattern('getDesksInRoom')
   async getDesksInRoom(@Payload() data: GetDesks, @Ctx() context: RmqContext) {
     const buildingId = data.buildingId;
     const roomName = data.roomName;
 
     console.log(await this.deskController.getDesksInRoom(buildingId, roomName));
-
-    this.acknowledgeMessage(context);
   }
 
   @MessagePattern('addDeskToRoom')
@@ -75,8 +119,6 @@ export class AppController {
     const desk = data.desk;
 
     await this.deskController.addDeskToRoom(buildingId, roomName, desk);
-
-    this.acknowledgeMessage(context);
   }
 
   @MessagePattern('editDeskInRoom')
@@ -87,8 +129,6 @@ export class AppController {
     const editedDesk = data.desk;
 
     await this.deskController.editDeskInRoom(buildingId, roomName, deskName, editedDesk);
-
-    this.acknowledgeMessage(context);
   }
 
   @MessagePattern('deleteDeskInRoom')
@@ -98,8 +138,6 @@ export class AppController {
     const deskName = data.deskName;
 
     await this.deskController.deleteDeskInRoom(buildingId, roomName, deskName);
-
-    this.acknowledgeMessage(context);
   }
 
   @Get("/building")
