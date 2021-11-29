@@ -15,6 +15,7 @@ import { IncidentReportController } from './incidentreports/incidentreport.contr
 import { GetRoomIncidentReports } from './incidentreports/interfaces/get_room_incidentreports.interface';
 import { GetDeskIncidentReports } from './incidentreports/interfaces/get_desk_incidentreports.interface';
 import { AddIncidentReportToRoom } from './incidentreports/interfaces/add_room_incidentreport.interface';
+import { AddIncidentReportToDesk } from './incidentreports/interfaces/add_desk_incidentreport.interface';
 
 
 @Controller()
@@ -181,8 +182,16 @@ export class AppController {
     await this.incidentReportController.addIncidentReportToRoom(buildingId, roomName, incidentReport);
   }
 
+  @MessagePattern('addIncidentReportToDesk')
+  async addIncidentReportToDesk(@Payload() data: AddIncidentReportToDesk, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
 
+    const incidentReport = data.incidentReport;
 
+    await this.incidentReportController.addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport);
+  }
 
   private acknowledgeMessage(context) {
     const channel = context.getChannelRef();
