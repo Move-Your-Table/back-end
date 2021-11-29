@@ -11,6 +11,6 @@ export class IncidentReportService {
 
     async getIncidentReportsFromRoom(buildingId, roomName) {
         const room = await this.roomService.getRoomByName(buildingId, roomName);
-        return room.desks;
+        return room.incidentReports;
     }
 }

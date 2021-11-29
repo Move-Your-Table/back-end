@@ -5,5 +5,7 @@ import { IncidentReportService } from "./incidentreport.service";
 export class IncidentReportController {
     constructor(private readonly incidentReportService: IncidentReportService) {}
 
-  
+    async getIncidentReportsFromRoom(buildingId, roomName) {
+        return await this.incidentReportService.getIncidentReportsFromRoom(buildingId, roomName);
+    }
 }

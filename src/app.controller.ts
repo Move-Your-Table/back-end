@@ -11,13 +11,17 @@ import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
 import { EditRoom } from './rooms/interfaces/editroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
+import { IncidentReportController } from './incidentreports/incidentreport.controller';
+import { GetRoomIncidentReports } from './incidentreports/interfaces/get_room_incidentreports.interface';
+
 
 @Controller()
 export class AppController {
   constructor(@Inject('MYT_SERVICE') private client: ClientProxy, 
   private readonly buildingController: BuildingController,
   private readonly roomsController: RoomsController,
-  private readonly deskController : DesksController) {}
+  private readonly deskController : DesksController,
+  private readonly incidentReportController : IncidentReportController) {}
 
   @MessagePattern('getAllBuildings')
   async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
@@ -144,6 +148,21 @@ export class AppController {
   getBuilding() : Promise<Building> {
       return this.buildingController.getBuilding("619b9bc46c2d9305f675c122");
   }
+
+
+
+
+  @MessagePattern('getIncidentReportsFromRoom')
+  async getIncidentReportsFromRoom(@Payload() data: GetRoomIncidentReports, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+
+    console.log(await this.incidentReportController.getIncidentReportsFromRoom(buildingId, roomName));
+  }
+
+
+
+
 
   private acknowledgeMessage(context) {
     const channel = context.getChannelRef();
