@@ -13,6 +13,7 @@ import { EditRoom } from './rooms/interfaces/editroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
 import { IncidentReportController } from './incidentreports/incidentreport.controller';
 import { GetRoomIncidentReports } from './incidentreports/interfaces/get_room_incidentreports.interface';
+import { GetDeskIncidentReports } from './incidentreports/interfaces/get_desk_incidentreports.interface';
 
 
 @Controller()
@@ -158,6 +159,16 @@ export class AppController {
     const roomName = data.roomName;
 
     console.log(await this.incidentReportController.getIncidentReportsFromRoom(buildingId, roomName));
+  }
+
+
+  @MessagePattern('getIncidentReportsFromDesk')
+  async getIncidentReportsFromDesk(@Payload() data: GetDeskIncidentReports, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
+
+    console.log(await this.incidentReportController.getIncidentReportsFromDesk(buildingId, roomName, deskName));
   }
 
 

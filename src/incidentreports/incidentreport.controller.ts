@@ -8,4 +8,8 @@ export class IncidentReportController {
     async getIncidentReportsFromRoom(buildingId, roomName) {
         return await this.incidentReportService.getIncidentReportsFromRoom(buildingId, roomName);
     }
+
+    async getIncidentReportsFromDesk(buildingId, roomName, deskName) {
+        return await this.incidentReportService.getIncidentReportsFromDesk(buildingId, roomName, deskName);
+    }
 }
