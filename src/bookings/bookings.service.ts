@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
+import { Model, Types } from 'mongoose';
 import { DesksService } from '../desks/desks.service';
 import { Building } from '../buildings/interfaces/building.interface';
 
@@ -17,8 +17,9 @@ export class BookingsService {
     async addBooking(buildingId, roomName, deskName, booking) {
         const building = await this.buildingModel.findOne({_id: buildingId});
         const room = building.rooms.find(room => room.name == roomName);
-        const desk = room.desks.find(desk => desk.name == deskName)[0];
+        const desk = room.desks.find(desk => desk.name == deskName);
 
+        booking._id = new Types.ObjectId();
         desk.bookings.push(booking);
 
         building.save(err => {
@@ -30,8 +31,8 @@ export class BookingsService {
     async cancelBooking(buildingId, roomName, deskName, bookingId) {
         const building = await this.buildingModel.findOne({_id: buildingId});
         const room = building.rooms.find(room => room.name == roomName);
-        const desk = room.desks.find(desk => desk.name == deskName)[0];
-        const bookingIndex = desk.bookings.findIndex(booking => booking.id == bookingId);
+        const desk = room.desks.find(desk => desk.name == deskName);
+        const bookingIndex = desk.bookings.findIndex(booking => booking._id.toString() == bookingId);
 
         desk.bookings.splice(bookingIndex, 1)
 

@@ -1,5 +1,8 @@
 import { Controller, Get, Inject } from '@nestjs/common';
 import { MessagePattern, Payload, Ctx, RmqContext, ClientProxy } from '@nestjs/microservices';
+import { BookingsController } from './bookings/bookings.controller';
+import { AddBooking } from './bookings/interfaces/add_booking.interface';
+import { CancelBooking } from './bookings/interfaces/cancel_booking.interface';
 import { BuildingController } from './buildings/building.controller';
 import { Building } from './buildings/interfaces/building.interface';
 import { DesksController } from './desks/desks.controller';
@@ -17,7 +20,8 @@ export class AppController {
   constructor(@Inject('MYT_SERVICE') private client: ClientProxy, 
   private readonly buildingController: BuildingController,
   private readonly roomsController: RoomsController,
-  private readonly deskController : DesksController) {}
+  private readonly deskController : DesksController,
+  private readonly bookingsController : BookingsController) {}
 
   @MessagePattern('getAllBuildings')
   async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
@@ -138,6 +142,26 @@ export class AppController {
     const deskName = data.deskName;
 
     await this.deskController.deleteDeskInRoom(buildingId, roomName, deskName);
+  }
+
+  @MessagePattern('addBooking')
+  async addBooking(@Payload() data: AddBooking, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
+    const booking = data.booking;
+
+    await this.bookingsController.addBooking(buildingId, roomName, deskName, booking);
+  }
+
+  @MessagePattern('cancelBooking')
+  async cancelBooking(@Payload() data: CancelBooking, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
+    const bookingId = data.bookingId;
+
+    await this.bookingsController.cancelBooking(buildingId, roomName, deskName, bookingId);
   }
 
   @Get("/building")
