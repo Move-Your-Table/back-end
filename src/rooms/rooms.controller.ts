@@ -1,6 +1,5 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { RoomService } from "./rooms.service";
-
 
 @Controller()
 export class RoomsController {
@@ -14,8 +13,8 @@ export class RoomsController {
         return await this.roomService.addRoom(buildingId, room);
     }
 
-    async updateRoomInBuilding(buildingId: string, updateRoom: object) {
-        return await this.roomService.updateRoom(buildingId, updateRoom);
+    async updateRoomInBuilding(buildingId: string, roomName: string, updateRoom: object) {
+        return await this.roomService.updateRoom(buildingId, roomName, updateRoom);
     }
 
     async deleteRoomInBuilding(buildingId: string, roomName: string) {
