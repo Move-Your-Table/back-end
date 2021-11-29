@@ -12,4 +12,12 @@ export class IncidentReportController {
     async getIncidentReportsFromDesk(buildingId, roomName, deskName) {
         return await this.incidentReportService.getIncidentReportsFromDesk(buildingId, roomName, deskName);
     }
+
+    async addIncidentReportToRoom(buildingId, roomName, incidentReport) {
+        return await this.incidentReportService.addIncidentReportToRoom(buildingId, roomName, incidentReport);
+    }
+
+    async addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport) {
+        return await this.incidentReportService.addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport);
+    }
 }
