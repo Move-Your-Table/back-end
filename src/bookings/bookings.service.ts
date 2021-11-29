@@ -14,22 +14,22 @@ export class BookingsService {
         return desk.bookings;
     }
 
-    async getBookingsInTimerange(buildingId, roomName, deskName, startTime, endTime) {
+    async hasBookingsInTimeRange(buildingId, roomName, deskName, startTime, endTime) {
         const bookings = await this.buildingModel.findOne(
             {_id: buildingId,
             "rooms.name": roomName,
             "rooms.desks.name": deskName,
-            "rooms.desks.bookings.start_time":{$lte: endTime}, 
-            "rooms.desks.bookings.end_time":{$gte: startTime}
+            "rooms.desks.bookings.start_time":{$lte: new Date(endTime)}, 
+            "rooms.desks.bookings.end_time":{$gte: new Date(startTime)}
             },
             {
                 _id: 1
             }
         );
 
-        if(bookings != null) {
-            console.log(bookings);
-        }
+        console.log(bookings);  
+        console.log(bookings != null);
+        return bookings != null;
     }
 
     async addBooking(buildingId, roomName, deskName, booking) {

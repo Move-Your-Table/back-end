@@ -7,7 +7,18 @@ export class BookingsController {
     constructor(private readonly bookingsService: BookingsService) {}
 
     async addBooking(buildingId: string, roomName: string, deskName: string, booking: Booking) {
-        this.bookingsService.getBookingsInTimerange(buildingId, roomName, deskName, booking.start_time, booking.end_time);
+        if(new Date(booking.start_time).getTime() < new Date().getTime()) {
+            throw "You can't book a desk in the past...";
+        }
+
+        if(new Date(booking.end_time).getTime() < new Date(booking.start_time).getTime()) {
+            throw "The end time of your booking has to be after the start time.";
+        }  
+
+        if(await this.bookingsService.hasBookingsInTimeRange(buildingId, roomName, deskName, booking.start_time, booking.end_time)) {
+            throw "The desk has already been booked at that time.";
+        }
+
         return await this.bookingsService.addBooking(buildingId, roomName, deskName, booking);
     }
 
