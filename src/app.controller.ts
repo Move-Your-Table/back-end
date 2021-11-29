@@ -152,6 +152,8 @@ export class AppController {
     const booking = data.booking;
 
     await this.bookingsController.addBooking(buildingId, roomName, deskName, booking);
+    
+    this.acknowledgeMessage(context);
   }
 
   @MessagePattern('cancelBooking')
@@ -162,6 +164,8 @@ export class AppController {
     const bookingId = data.bookingId;
 
     await this.bookingsController.cancelBooking(buildingId, roomName, deskName, bookingId);
+  
+    this.acknowledgeMessage(context);
   }
 
   @Get("/building")

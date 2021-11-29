@@ -7,6 +7,7 @@ export class BookingsController {
     constructor(private readonly bookingsService: BookingsService) {}
 
     async addBooking(buildingId: string, roomName: string, deskName: string, booking: Booking) {
+        this.bookingsService.getBookingsInTimerange(buildingId, roomName, deskName, booking.start_time, booking.end_time);
         return await this.bookingsService.addBooking(buildingId, roomName, deskName, booking);
     }
 
