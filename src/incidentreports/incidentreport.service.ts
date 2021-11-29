@@ -22,6 +22,30 @@ export class IncidentReportService {
         return desk.incidentReports;
     }
 
+    async addIncidentReportToRoom(buildingId, roomName, incidentReport) {
+        const building = await this.buildingModel.findOne({_id: buildingId});
+        const room = building.rooms.find(room => room.name == roomName);
+        room.incidentReports.push(incidentReport);
+
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
+
+    
+    async addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport) {
+        const building = await this.buildingModel.findOne({_id: buildingId});
+        const room = building.rooms.find(room => room.name == roomName);
+        const desk = room.desks.find(desk => desk.name == deskName);
+
+        desk.incidentReports.push(incidentReport);
+
+        building.save(err => {
+            if(err) throw err;
+            return true;
+        });
+    }
 
     
 }
