@@ -14,6 +14,7 @@ import { RoomsController } from './rooms/rooms.controller';
 import { IncidentReportController } from './incidentreports/incidentreport.controller';
 import { GetRoomIncidentReports } from './incidentreports/interfaces/get_room_incidentreports.interface';
 import { GetDeskIncidentReports } from './incidentreports/interfaces/get_desk_incidentreports.interface';
+import { AddIncidentReportToRoom } from './incidentreports/interfaces/add_room_incidentreport.interface';
 
 
 @Controller()
@@ -171,6 +172,14 @@ export class AppController {
     console.log(await this.incidentReportController.getIncidentReportsFromDesk(buildingId, roomName, deskName));
   }
 
+  @MessagePattern('addIncidentReportToRoom')
+  async addIncidentReportToRoom(@Payload() data: AddIncidentReportToRoom, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const incidentReport = data.incidentReport;
+
+    await this.incidentReportController.addIncidentReportToRoom(buildingId, roomName, incidentReport);
+  }
 
 
 
