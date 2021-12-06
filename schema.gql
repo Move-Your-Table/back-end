@@ -16,6 +16,7 @@ type Query {
 type Mutation {
   addBuilding(buildingInput: BuildingInput!): BuildingType!
   updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
+  deleteBuilding(id: String!): BuildingType!
 }
 
 input BuildingInput {

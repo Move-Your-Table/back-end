@@ -6,24 +6,24 @@ import { BuildingType, BuildingInput } from './dto/building.dto';
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService) {};
     
-    @Query(returns => [BuildingType])
+    @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
         return this.buildingService.findAll();
     }
 
-    @Query(returns => BuildingType, {name: 'building'})
+    @Query(() => BuildingType, {name: 'building'})
     async getBuilding(@Args('id', { type: () => String }) id: string) {
       return this.buildingService.findOne(id);
     }
 
 
-    @Mutation(returns => BuildingType)
+    @Mutation(() => BuildingType)
     async addBuilding(
       @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
         return this.buildingService.createBuilding(buildingInput.name, buildingInput.address);
     }
 
-    @Mutation(returns => BuildingType)
+    @Mutation(() => BuildingType)
     async updateBuilding(
       @Args('id') id: string,
       @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
@@ -33,5 +33,12 @@ export class BuildingsResolver {
         }
         return this.buildingService.findOne(id);
     }
+
+    @Mutation(() => BuildingType)
+    async deleteBuilding(
+      @Args('id') id: string) {
+        return await this.buildingService.deleteBuilding(id);
+    }
+      
       
 }
