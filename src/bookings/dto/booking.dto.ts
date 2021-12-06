@@ -7,9 +7,9 @@ export class BookingType {
   @Field()
   readonly user_id: number;
   @Field()
-  readonly start_time: string;
+  readonly start_time: Date;
   @Field()
-  readonly end_time: string;
+  readonly end_time: Date;
   @Field()
   readonly public: boolean;
 }
