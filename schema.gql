@@ -52,9 +52,15 @@ type Mutation {
   addBuilding(buildingInput: BuildingInput!): BuildingType!
   updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
   deleteBuilding(id: String!): BuildingType!
+  addIncidentReportToRoom(incidentReportInput: incidentReportInput!, roomName: String!, buildingId: String!): IncidentReportType!
 }
 
 input BuildingInput {
   name: String!
   address: String!
+}
+
+input incidentReportInput {
+  user_id: Float!
+  message: String!
 }

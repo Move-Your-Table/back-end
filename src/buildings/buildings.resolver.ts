@@ -4,6 +4,7 @@ import { RoomType } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
+import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -57,4 +58,23 @@ export class BuildingsResolver {
           return this.roomService.getRooms(buildingId);
         }
     }
+
+    @Mutation(() => IncidentReportType)
+    async addIncidentReportToRoom(
+      @Args('buildingId') buildingId: string,
+      @Args('roomName') roomName: string,
+      @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
+        const building = await this.buildingService.findOne(buildingId);
+        const room = building.rooms.find(room => room.name == roomName);
+        const newIncidentReport = {user_id: incidentReportInput.user_id, message: incidentReportInput.message};
+        
+        room.incidentReports.push(newIncidentReport);
+        
+        building.save(err => {
+          if(err) throw err;
+          return true;
+        });
+
+        return newIncidentReport;
+      }
 }

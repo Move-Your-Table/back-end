@@ -1,6 +1,4 @@
-import { Document } from 'mongoose';
-
-export interface IncidentReport extends Document {
+export interface IncidentReport {
     readonly user_id: number,
     readonly message: string,
 }
