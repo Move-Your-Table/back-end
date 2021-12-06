@@ -1,7 +1,10 @@
-import { ObjectType, Field, InputType } from '@nestjs/graphql';
+import { ObjectType, Field, InputType, ID } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 
 @ObjectType()
 export class IncidentReportType {
+  @Field(() => ID)
+  readonly _id: Types.ObjectId;
   @Field()
   readonly user_id: number;
   @Field()

@@ -5,6 +5,7 @@ import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
+import { Types } from 'mongoose';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -85,8 +86,8 @@ export class BuildingsResolver {
         }
 
         private addIncidentReport(building, list, incidentReportInput : incidentReportInput) {
-          const newIncidentReport = {user_id: incidentReportInput.user_id, message: incidentReportInput.message};
-          
+          const newIncidentReport = {_id: new Types.ObjectId(), user_id: incidentReportInput.user_id, message: incidentReportInput.message};
+
           list.push(newIncidentReport);
 
           building.save(err => {
