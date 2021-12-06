@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
 
 @ObjectType()
@@ -9,4 +9,13 @@ export class BuildingType {
   readonly name: string;
   @Field()
   readonly address: string;
+}
+
+
+@InputType()
+export class BuildingInput {
+  @Field()
+  name: string;
+  @Field()
+  address: string;
 }

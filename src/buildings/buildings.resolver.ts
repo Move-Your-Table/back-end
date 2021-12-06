@@ -1,6 +1,6 @@
-import { Resolver, Query, Args } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
 import { BuildingsService } from './buildings.service';
-import { BuildingType } from './dto/building.dto';
+import { BuildingType, BuildingInput } from './dto/building.dto';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -15,4 +15,12 @@ export class BuildingsResolver {
     async getBuilding(@Args('id', { type: () => String }) id: string) {
       return this.buildingService.findOne(id);
     }
+
+
+    @Mutation(returns => BuildingType)
+    async addBuilding(
+      @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
+        return this.buildingService.createBuilding(buildingInput.name, buildingInput.address);
+    }
+      
 }
