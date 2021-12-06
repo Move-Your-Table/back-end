@@ -68,13 +68,32 @@ export class BuildingsResolver {
         const room = building.rooms.find(room => room.name == roomName);
         const newIncidentReport = {user_id: incidentReportInput.user_id, message: incidentReportInput.message};
         
-        room.incidentReports.push(newIncidentReport);
-        
-        building.save(err => {
-          if(err) throw err;
-          return true;
-        });
-
-        return newIncidentReport;
+        return this.addIncidentReport(building, room.incidentReports, incidentReportInput);
       }
+
+      @Mutation(() => IncidentReportType)
+      async addIncidentReportToDesk(
+        @Args('buildingId') buildingId: string,
+        @Args('roomName') roomName: string,
+        @Args('deskName') deskName: string,
+        @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
+          const building = await this.buildingService.findOne(buildingId);
+          const room = building.rooms.find(room => room.name == roomName);
+          const desk = room.desks.find(desk => desk.name == deskName);
+
+          return this.addIncidentReport(building, desk.incidentReports, incidentReportInput);
+        }
+
+        private addIncidentReport(building, list, incidentReportInput : incidentReportInput) {
+          const newIncidentReport = {user_id: incidentReportInput.user_id, message: incidentReportInput.message};
+          
+          list.push(newIncidentReport);
+
+          building.save(err => {
+            if(err) throw err;
+            return true;
+          });
+
+          return newIncidentReport;
+        }
 }
