@@ -1,4 +1,5 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import { DeskType } from '../../desks/dto/desk.dto';
 
 @ObjectType()
 export class RoomType {
@@ -12,4 +13,6 @@ export class RoomType {
   readonly floor: number;
   @Field()
   readonly features: String;
+  @Field(type => [DeskType])
+  readonly desks: DeskType[];
 }
