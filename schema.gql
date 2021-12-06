@@ -55,6 +55,8 @@ type Mutation {
   deleteBuilding(id: String!): BuildingType!
   addIncidentReportToRoom(incidentReportInput: incidentReportInput!, roomName: String!, buildingId: String!): IncidentReportType!
   addIncidentReportToDesk(incidentReportInput: incidentReportInput!, deskName: String!, roomName: String!, buildingId: String!): IncidentReportType!
+  removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
+  removeIncidentReportFromDesk(incidentReportId: String!, deskName: String!, roomName: String!, buildingId: String!): Boolean!
 }
 
 input BuildingInput {

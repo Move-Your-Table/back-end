@@ -6,11 +6,13 @@ import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 import { Types } from 'mongoose';
+import { IncidentReportService } from '../incidentreports/incidentreport.service';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService,
-      private readonly roomService : RoomService) {};
+      private readonly roomService : RoomService,
+      private readonly incidentReportService : IncidentReportService) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -65,11 +67,15 @@ export class BuildingsResolver {
       @Args('buildingId') buildingId: string,
       @Args('roomName') roomName: string,
       @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
-        const building = await this.buildingService.findOne(buildingId);
-        const room = building.rooms.find(room => room.name == roomName);
-        const newIncidentReport = {user_id: incidentReportInput.user_id, message: incidentReportInput.message};
         
-        return this.addIncidentReport(building, room.incidentReports, incidentReportInput);
+        const newIncidentReport = {_id: new Types.ObjectId(), 
+          user_id: incidentReportInput.user_id, 
+          message: incidentReportInput.message};
+       
+        await this.incidentReportService.addIncidentReportToRoom(
+          buildingId, roomName, newIncidentReport);
+
+          return newIncidentReport;
       }
 
       @Mutation(() => IncidentReportType)
@@ -78,23 +84,32 @@ export class BuildingsResolver {
         @Args('roomName') roomName: string,
         @Args('deskName') deskName: string,
         @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
-          const building = await this.buildingService.findOne(buildingId);
-          const room = building.rooms.find(room => room.name == roomName);
-          const desk = room.desks.find(desk => desk.name == deskName);
+          const newIncidentReport = {_id: new Types.ObjectId(), 
+            user_id: incidentReportInput.user_id, 
+            message: incidentReportInput.message};
 
-          return this.addIncidentReport(building, desk.incidentReports, incidentReportInput);
-        }
-
-        private addIncidentReport(building, list, incidentReportInput : incidentReportInput) {
-          const newIncidentReport = {_id: new Types.ObjectId(), user_id: incidentReportInput.user_id, message: incidentReportInput.message};
-
-          list.push(newIncidentReport);
-
-          building.save(err => {
-            if(err) throw err;
-            return true;
-          });
+          await this.incidentReportService.addIncidentReportToDesk(buildingId, roomName, 
+            deskName, newIncidentReport);
 
           return newIncidentReport;
+        }
+
+        @Mutation(() => Boolean)
+        async removeIncidentReportFromRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('incidentReportId') reportId: string): Promise<Boolean> {
+            return this.incidentReportService.
+            removeIncidentReportFromRoom(buildingId, roomName, reportId);
+        }
+
+        @Mutation(() => Boolean)
+        async removeIncidentReportFromDesk(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('deskName') deskName: string,
+          @Args('incidentReportId') reportId: string): Promise<Boolean> {
+            return this.incidentReportService.
+            removeIncidentReportFromDesk(buildingId, roomName, deskName, reportId);
         }
 }
