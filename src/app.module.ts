@@ -7,11 +7,16 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { RoomsModule } from './rooms/rooms.module';
 import { DesksModule } from './desks/desks.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { GraphQLModule } from '@nestjs/graphql';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
 
 
 @Module({
   imports: [
+    GraphQLModule.forRoot({
+      autoSchemaFile: "schema.gql",
+      playground: true,
+    }),
     ConfigModule.forRoot(),
     BuildingsModule,
     RoomsModule,
