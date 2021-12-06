@@ -7,9 +7,23 @@ type IncidentReportType {
   message: String!
 }
 
+type BookingType {
+  _id: String!
+  user_id: Float!
+  start_time: DateTime!
+  end_time: DateTime!
+  public: Boolean!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type DeskType {
   name: String!
   incidentReports: [IncidentReportType!]!
+  bookings(after: DateTime, before: DateTime, _id: String): [BookingType!]!
 }
 
 type RoomType {
@@ -21,11 +35,6 @@ type RoomType {
   desks(name: String): [DeskType!]!
   incidentReports: [IncidentReportType!]!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type BuildingType {
   _id: ID!
