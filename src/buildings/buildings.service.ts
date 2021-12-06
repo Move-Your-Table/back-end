@@ -54,11 +54,13 @@ export class BuildingsService {
         return await this.buildingModel.create({"_id": id, "name": name, "address": address});
     }
 
-    async updateBuilding(building: Building, name: string, address: string) {
+    async updateBuilding(buildingId: string, name: string, address: string) {
+        const building = await this.findOne(buildingId);
         return await building.updateOne({"name": name, "address": address});
     }
 
-    async deleteBuilding(building: Building) {
+    async deleteBuilding(buildingId: string) {
+        const building = await this.findOne(buildingId);
         return await building.deleteOne({});
     }
 

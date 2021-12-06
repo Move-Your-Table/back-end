@@ -47,3 +47,14 @@ type Query {
   buildings: [BuildingType!]!
   building(id: String!): BuildingType!
 }
+
+type Mutation {
+  addBuilding(buildingInput: BuildingInput!): BuildingType!
+  updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
+  deleteBuilding(id: String!): BuildingType!
+}
+
+input BuildingInput {
+  name: String!
+  address: String!
+}
