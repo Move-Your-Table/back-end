@@ -22,7 +22,7 @@ export class BuildingsResolver {
 
     @ResolveField(returns => [RoomType])
     async rooms(@Parent() building : BuildingType,
-    @Args('name', { type: () => String, nullable: true }) name?: string) : Promise<[Room]> {
+    @Args('name', { type: () => String, nullable: true }) name?: string) : Promise<Room[]> {
         const buildingId = building._id;
 
         if(name) {
