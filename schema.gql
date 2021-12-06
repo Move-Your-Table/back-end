@@ -2,8 +2,14 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type IncidentReportType {
+  user_id: Float!
+  message: String!
+}
+
 type DeskType {
   name: String!
+  incidentReports: [IncidentReportType!]!
 }
 
 type RoomType {
@@ -13,6 +19,7 @@ type RoomType {
   floor: Float!
   features: String!
   desks(name: String): [DeskType!]!
+  incidentReports: [IncidentReportType!]!
 }
 
 """
