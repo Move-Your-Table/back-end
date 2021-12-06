@@ -1,10 +1,14 @@
-import { Resolver, Query, Args, Mutation } from '@nestjs/graphql';
+import { Resolver, Query, Args, Mutation, ResolveField, Parent } from '@nestjs/graphql';
+import { Room } from '../rooms/interfaces/room.interface';
+import { RoomType } from '../rooms/dto/room.dto';
+import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
-    constructor(private readonly buildingService : BuildingsService) {};
+    constructor(private readonly buildingService : BuildingsService,
+      private readonly roomService : RoomService) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -41,4 +45,16 @@ export class BuildingsResolver {
     }
       
       
+    @ResolveField(returns => [RoomType])
+    async rooms(@Parent() building : BuildingType,
+    @Args('name', { type: () => String, nullable: true }) name?: string) : Promise<Room[]> {
+        const buildingId = building._id;
+
+        if(name) {
+          const room = await this.roomService.getRoomByName(buildingId, name);
+          return room ? [room] : new Array<Room>();
+        } else {
+          return this.roomService.getRooms(buildingId);
+        }
+    }
 }
