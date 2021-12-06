@@ -22,5 +22,16 @@ export class BuildingsResolver {
       @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
         return this.buildingService.createBuilding(buildingInput.name, buildingInput.address);
     }
+
+    @Mutation(returns => BuildingType)
+    async updateBuilding(
+      @Args('id') id: string,
+      @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
+        let updatedBuilding = await this.buildingService.updateBuilding(id, buildingInput.name, buildingInput.address);
+        if (updatedBuilding.acknowledged !== true) {
+            return null;
+        }
+        return this.buildingService.findOne(id);
+    }
       
 }

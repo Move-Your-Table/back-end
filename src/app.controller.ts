@@ -38,11 +38,9 @@ export class AppController {
 
   @MessagePattern('deleteBuilding')
   async deleteBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
-
     const buildingId = data.id;
-    const building = await this.buildingController.getBuilding(buildingId);
 
-    await this.buildingController.deleteBuilding(building);
+    await this.buildingController.deleteBuilding(buildingId);
 
     this.acknowledgeMessage(context);
   }
@@ -104,9 +102,7 @@ export class AppController {
     const buildingName = data.name;
     const address = data.address;
     
-    const building = await this.buildingController.getBuilding(buildingId);
-
-    await this.buildingController.updateBuilding(building, buildingName, address);
+    await this.buildingController.updateBuilding(buildingId, buildingName, address);
 
     this.acknowledgeMessage(context);
   }
