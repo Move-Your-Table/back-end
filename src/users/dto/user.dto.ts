@@ -1,5 +1,6 @@
 import { ObjectType, Field, ID } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
+import { Role } from '../interfaces/user.interface';
 
 @ObjectType()
 export class UserType {
@@ -12,5 +13,5 @@ export class UserType {
   @Field()
   readonly phonenumber: string;
   @Field()
-  readonly role: string;
+  readonly role: Role;
 }
