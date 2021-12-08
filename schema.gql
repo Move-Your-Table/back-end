@@ -43,7 +43,17 @@ type BuildingType {
   rooms(name: String): [RoomType!]!
 }
 
+type UserType {
+  _id: ID!
+  username: String!
+  email: String!
+  phonenumber: String!
+  role: String!
+}
+
 type Query {
   buildings: [BuildingType!]!
   building(id: String!): BuildingType!
+  users: [UserType!]!
+  user(id: String!): UserType!
 }
