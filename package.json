@@ -18,6 +18,8 @@
     "start:local:debug": "docker-compose --profile all stop && docker-compose --profile dev-local up -d && nest start --debug --watch",
     "start:container:dev": "docker-compose --profile all stop && docker-compose --profile dev-container up -d",
     "start:container:staging": "docker-compose --profile all stop && docker-compose --profile staging up -d",
+    "start:container:prod": "docker-compose --profile all stop && docker-compose --profile prod up -d",
+    "container:rebuild": "docker-compose --profile all down && docker-compose --profile all build --no-cache",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
     "test": "jest",
     "test:watch": "jest --watch",
