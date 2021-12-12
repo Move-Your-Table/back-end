@@ -1,9 +1,10 @@
 import { ObjectType, Field } from '@nestjs/graphql';
+import { Types } from 'mongoose';
 
 @ObjectType()
 export class BookingType {
   @Field()
-  readonly _id : string;
+  readonly _id : Types.ObjectId;
   @Field()
   readonly user_id: number;
   @Field()
