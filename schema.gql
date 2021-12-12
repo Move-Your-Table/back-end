@@ -3,13 +3,13 @@
 # ------------------------------------------------------
 
 type IncidentReportType {
-  user_id: Float!
+  user_id: String!
   message: String!
 }
 
 type BookingType {
-  _id: String!
-  user_id: Float!
+  _id: ID!
+  user_id: String!
   start_time: DateTime!
   end_time: DateTime!
   public: Boolean!

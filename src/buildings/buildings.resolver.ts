@@ -4,11 +4,14 @@ import { RoomType } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
+import { BookingInput, BookingType } from '../bookings/dto/booking.dto';
+import { DesksService } from '../desks/desks.service';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService,
-      private readonly roomService : RoomService) {};
+      private readonly roomService : RoomService,
+      private readonly deskService : DesksService) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -57,4 +60,21 @@ export class BuildingsResolver {
           return this.roomService.getRooms(buildingId);
         }
     }
+
+    // @Mutation(() => BookingType)
+    // async addBookingToDesk(
+    //   @Args('buildingId') buildingId: string,
+    //   @Args('roomName') roomName: string,
+    //   @Args('deskName') deskName: string,
+    //   @Args('bookingInput') BookingInput: BookingInput): Promise<BookingType> {
+    //   }
+
+    // @Mutation(() => BookingType)
+    // async cancelBookingFromDesk(
+    //   @Args('buildingId') buildingId: string,
+    //   @Args('roomName') roomName: string,
+    //   @Args('deskName') deskName: string,
+    //   @Args('bookingId') bookingId: string): Promise<BookingType> {
+    //   }
+
 }
