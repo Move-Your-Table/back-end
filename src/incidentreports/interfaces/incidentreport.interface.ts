@@ -1,6 +1,7 @@
-import { Document } from 'mongoose';
+import { Types } from "mongoose";
 
-export interface IncidentReport extends Document {
+export interface IncidentReport {
+    readonly _id: Types.ObjectId,
     readonly user_id: string,
     readonly message: string,
 }

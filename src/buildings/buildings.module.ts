@@ -6,11 +6,13 @@ import { BuildingController } from './building.controller';
 import { BuildingsResolver } from './buildings.resolver';
 import { RoomsModule } from '../rooms/rooms.module';
 import { DesksModule } from '../desks/desks.module';
+import { IncidentReportsModule } from 'src/incidentreports/incidentreport.module';
 
 @Module({
   imports: [MongooseModule.forFeature([{name: 'Building', schema: BuildingSchema}]), 
   RoomsModule,
-  DesksModule],
+  DesksModule,
+  IncidentReportsModule],
   providers: [BuildingsService, BuildingController, BuildingsResolver],
   exports: [BuildingsService, BuildingController]
 })
