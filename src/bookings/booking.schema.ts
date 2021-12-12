@@ -1,9 +1,8 @@
-import { Schema } from 'mongoose';
-import { ObjectId } from 'mongodb';
+import { Schema, Types } from 'mongoose';
 
 export const BookingSchema = new Schema({
-    _id: ObjectId,
-    user_id: Number,
+    _id: Types.ObjectId,
+    user_id: String,
     start_time: String,
     end_time: String,
     public: Boolean
