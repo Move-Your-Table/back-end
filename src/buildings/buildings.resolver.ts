@@ -4,11 +4,15 @@ import { RoomType } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
+import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
+import { Types } from 'mongoose';
+import { IncidentReportService } from '../incidentreports/incidentreport.service';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService,
-      private readonly roomService : RoomService) {};
+      private readonly roomService : RoomService,
+      private readonly incidentReportService : IncidentReportService) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -57,4 +61,55 @@ export class BuildingsResolver {
           return this.roomService.getRooms(buildingId);
         }
     }
+
+    @Mutation(() => IncidentReportType)
+    async addIncidentReportToRoom(
+      @Args('buildingId') buildingId: string,
+      @Args('roomName') roomName: string,
+      @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
+        
+        const newIncidentReport = {_id: new Types.ObjectId(), 
+          user_id: incidentReportInput.user_id, 
+          message: incidentReportInput.message};
+       
+        await this.incidentReportService.addIncidentReportToRoom(
+          buildingId, roomName, newIncidentReport);
+
+          return newIncidentReport;
+      }
+
+      @Mutation(() => IncidentReportType)
+      async addIncidentReportToDesk(
+        @Args('buildingId') buildingId: string,
+        @Args('roomName') roomName: string,
+        @Args('deskName') deskName: string,
+        @Args('incidentReportInput') incidentReportInput: incidentReportInput): Promise<IncidentReportType> {
+          const newIncidentReport = {_id: new Types.ObjectId(), 
+            user_id: incidentReportInput.user_id, 
+            message: incidentReportInput.message};
+
+          await this.incidentReportService.addIncidentReportToDesk(buildingId, roomName, 
+            deskName, newIncidentReport);
+
+          return newIncidentReport;
+        }
+
+        @Mutation(() => Boolean)
+        async removeIncidentReportFromRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('incidentReportId') reportId: string): Promise<Boolean> {
+            return this.incidentReportService.
+            removeIncidentReportFromRoom(buildingId, roomName, reportId);
+        }
+
+        @Mutation(() => Boolean)
+        async removeIncidentReportFromDesk(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('deskName') deskName: string,
+          @Args('incidentReportId') reportId: string): Promise<Boolean> {
+            return this.incidentReportService.
+            removeIncidentReportFromDesk(buildingId, roomName, deskName, reportId);
+        }
 }

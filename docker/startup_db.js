@@ -36,3 +36,10 @@ db.buildings.insert({
     },
   ],
 });
+
+db.users.insert({
+  username: 'Joe',
+  email: 'joe@joemail.com',
+  phonenumber: '123456789',
+  role: 'admin'
+});

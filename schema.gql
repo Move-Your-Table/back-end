@@ -3,28 +3,30 @@
 # ------------------------------------------------------
 
 type IncidentReportType {
+  _id: ID!
   user_id: Float!
   message: String!
 }
 
 type BookingType {
-  _id: String!
-  user_id: Float!
-  start_time: DateTime!
-  end_time: DateTime!
+  _id: ID!
+  user_id: String!
+  start_time: String!
+  end_time: String!
   public: Boolean!
+  user: UserType!
 }
-
-"""
-A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
-"""
-scalar DateTime
 
 type DeskType {
   name: String!
   incidentReports: [IncidentReportType!]!
   bookings(after: DateTime, before: DateTime, _id: String): [BookingType!]!
 }
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
 
 type RoomType {
   name: String!
@@ -43,18 +45,37 @@ type BuildingType {
   rooms(name: String): [RoomType!]!
 }
 
+type UserType {
+  _id: ID!
+  username: String!
+  email: String!
+  phonenumber: String!
+  role: String!
+}
+
 type Query {
   buildings: [BuildingType!]!
   building(id: String!): BuildingType!
+  users: [UserType!]!
+  user(id: String!): UserType!
 }
 
 type Mutation {
   addBuilding(buildingInput: BuildingInput!): BuildingType!
   updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
   deleteBuilding(id: String!): BuildingType!
+  addIncidentReportToRoom(incidentReportInput: incidentReportInput!, roomName: String!, buildingId: String!): IncidentReportType!
+  addIncidentReportToDesk(incidentReportInput: incidentReportInput!, deskName: String!, roomName: String!, buildingId: String!): IncidentReportType!
+  removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
+  removeIncidentReportFromDesk(incidentReportId: String!, deskName: String!, roomName: String!, buildingId: String!): Boolean!
 }
 
 input BuildingInput {
   name: String!
   address: String!
+}
+
+input incidentReportInput {
+  user_id: Float!
+  message: String!
 }

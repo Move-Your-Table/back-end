@@ -1,15 +1,16 @@
-import { ObjectType, Field } from '@nestjs/graphql';
+import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectId } from 'mongoose';
 
 @ObjectType()
 export class BookingType {
+  @Field(() => ID)
+  readonly _id : ObjectId;
   @Field()
-  readonly _id : string;
+  readonly user_id: String;
   @Field()
-  readonly user_id: number;
+  readonly start_time: string;
   @Field()
-  readonly start_time: Date;
-  @Field()
-  readonly end_time: Date;
+  readonly end_time: string;
   @Field()
   readonly public: boolean;
 }
