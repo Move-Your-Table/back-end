@@ -16,7 +16,11 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
    ```
 3. In the root of the directory, use the following command:
     ```bash
+    # If you want to run everything in the container
     $ npm run start:container:dev
+
+    # If you want to run the source code offline
+    $ npm run start:local:dev
     ```
 ✅ Done! Your application should be configured & up and running. Start developing!
 
@@ -40,15 +44,15 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
   Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.
 
 ### Plain commands
-- **`npm run start:plain`**
+- **`npm run start`**
   
   Starts a development server without any hot-reloading capabilities, **without any of the necessary containers.** 
 
-- **`npm run start:plain:dev`**
+- **`npm run start:dev`**
   
   Starts a development server **with** hot-reloading capabilities, **without any of the necessary containers.** 
 
-- **`npm run start:plain:prod`**
+- **`npm run start:prod`**
   
   Starts a production-ready server, **without any of the necessary containers.** 
 

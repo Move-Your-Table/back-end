@@ -10,11 +10,10 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { GraphQLModule } from '@nestjs/graphql';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
 
-
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile: "schema.gql",
+      autoSchemaFile: 'schema.gql',
       playground: true,
     }),
     ConfigModule.forRoot(),
@@ -22,13 +21,17 @@ import { IncidentReportsModule } from './incidentreports/incidentreport.module';
     RoomsModule,
     DesksModule,
     IncidentReportsModule,
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}/MYT?authSource=admin`),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@${process.env.MONGO_ENDPOINT}:${process.env.MONGO_PORT}/${process.env.MONGO_INIT_DB}?authSource=admin`,
+    ),
     ClientsModule.register([
       {
         name: 'MYT_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [`amqp://localhost:${process.env.RABBITMQ_PORT}`],
+          urls: [
+            `amqp://${process.env.RABBITMQ_ENDPOINT}:${process.env.RABBITMQ_PORT}`,
+          ],
           queue: 'frontend_queue',
           queueOptions: {
             durable: false,
