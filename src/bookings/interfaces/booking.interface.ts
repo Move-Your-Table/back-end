@@ -1,3 +1,5 @@
+import { ObjectId } from 'mongodb';
+
 export interface Booking {
     readonly _id: string,
     readonly user_id: number,
