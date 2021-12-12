@@ -27,8 +27,8 @@ services:
       - RABBITMQ_ENDPOINT=rabbitmq_dev
       - RABBITMQ_PORT=5672      
   nestjs_prod:
-    profiles: ["all"]
-    image: myt/back-end:dev
+    profiles: ["all", "staging", "prod"]
+    image: myt/back-end:prod
     container_name: Nest.JS-Prod
     ports:
       - ${NESTJS_PORT}:3000
@@ -36,11 +36,12 @@ services:
       dockerfile: ./docker/Nest_Prod_Dockerfile
       context: .
     depends_on:
-      - mongodb_dev
+      - mongodb_prod
+      - rabbitmq_prod
       - rabbitmq_dev
   
   rabbitmq_dev:
-    profiles: ["dev-local", "dev-container", "all"]
+    profiles: ["dev-local", "dev-container", "all", "staging"]
     image: rabbitmq:3.9.10-management-alpine
     container_name: RabbitMQ-Dev
     ports:
@@ -52,7 +53,7 @@ services:
     container_name: RabbitMQ-Prod
   
   mongodb_dev:
-    profiles: ["dev-local", "dev-container", "all"]
+    profiles: ["dev-local", "dev-container", "all", "staging"]
     image: myt/back-end-db:1.0
     container_name: MongoDB-Dev
     build:
