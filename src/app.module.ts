@@ -10,6 +10,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { GraphQLModule } from '@nestjs/graphql';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
 import { UsersModule } from './users/users.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 
 @Module({
@@ -24,6 +25,7 @@ import { UsersModule } from './users/users.module';
     DesksModule,
     IncidentReportsModule,
     UsersModule,
+    BookingsModule,
     MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}/MYT?authSource=admin`),
     ClientsModule.register([
       {
