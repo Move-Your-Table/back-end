@@ -14,6 +14,12 @@ import { AddRoom } from './rooms/interfaces/addroom.interface';
 import { DeleteRoom } from './rooms/interfaces/deleteroom.interface';
 import { EditRoom } from './rooms/interfaces/editroom.interface';
 import { RoomsController } from './rooms/rooms.controller';
+import { IncidentReportController } from './incidentreports/incidentreport.controller';
+import { GetRoomIncidentReports } from './incidentreports/interfaces/get_room_incidentreports.interface';
+import { GetDeskIncidentReports } from './incidentreports/interfaces/get_desk_incidentreports.interface';
+import { AddIncidentReportToRoom } from './incidentreports/interfaces/add_room_incidentreport.interface';
+import { AddIncidentReportToDesk } from './incidentreports/interfaces/add_desk_incidentreport.interface';
+
 
 @Controller()
 export class AppController {
@@ -21,7 +27,8 @@ export class AppController {
   private readonly buildingController: BuildingController,
   private readonly roomsController: RoomsController,
   private readonly deskController : DesksController,
-  private readonly bookingsController : BookingsController) {}
+  private readonly bookingsController : BookingsController,
+  private readonly incidentReportController : IncidentReportController) {}
 
   @MessagePattern('getAllBuildings')
   async getAllBuildings(@Payload() data: string, @Ctx() context: RmqContext) {
@@ -35,11 +42,9 @@ export class AppController {
 
   @MessagePattern('deleteBuilding')
   async deleteBuilding(@Payload() data: any, @Ctx() context: RmqContext) {
-
     const buildingId = data.id;
-    const building = await this.buildingController.getBuilding(buildingId);
 
-    await this.buildingController.deleteBuilding(building);
+    await this.buildingController.deleteBuilding(buildingId);
 
     this.acknowledgeMessage(context);
   }
@@ -101,9 +106,7 @@ export class AppController {
     const buildingName = data.name;
     const address = data.address;
     
-    const building = await this.buildingController.getBuilding(buildingId);
-
-    await this.buildingController.updateBuilding(building, buildingName, address);
+    await this.buildingController.updateBuilding(buildingId, buildingName, address);
 
     this.acknowledgeMessage(context);
   }
@@ -171,6 +174,47 @@ export class AppController {
   @Get("/building")
   getBuilding() : Promise<Building> {
       return this.buildingController.getBuilding("619b9bc46c2d9305f675c122");
+  }
+
+
+
+
+  @MessagePattern('getIncidentReportsFromRoom')
+  async getIncidentReportsFromRoom(@Payload() data: GetRoomIncidentReports, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+
+    console.log(await this.incidentReportController.getIncidentReportsFromRoom(buildingId, roomName));
+  }
+
+
+  @MessagePattern('getIncidentReportsFromDesk')
+  async getIncidentReportsFromDesk(@Payload() data: GetDeskIncidentReports, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
+
+    console.log(await this.incidentReportController.getIncidentReportsFromDesk(buildingId, roomName, deskName));
+  }
+
+  @MessagePattern('addIncidentReportToRoom')
+  async addIncidentReportToRoom(@Payload() data: AddIncidentReportToRoom, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const incidentReport = data.incidentReport;
+
+    await this.incidentReportController.addIncidentReportToRoom(buildingId, roomName, incidentReport);
+  }
+
+  @MessagePattern('addIncidentReportToDesk')
+  async addIncidentReportToDesk(@Payload() data: AddIncidentReportToDesk, @Ctx() context: RmqContext) {
+    const buildingId = data.buildingId;
+    const roomName = data.roomName;
+    const deskName = data.deskName;
+
+    const incidentReport = data.incidentReport;
+
+    await this.incidentReportController.addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport);
   }
 
   private acknowledgeMessage(context) {
