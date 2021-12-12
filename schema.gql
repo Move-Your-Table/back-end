@@ -3,12 +3,13 @@
 # ------------------------------------------------------
 
 type IncidentReportType {
+  _id: ID!
   user_id: Float!
   message: String!
 }
 
 type BookingType {
-  _id: String!
+  _id: ID!
   user_id: String!
   start_time: String!
   end_time: String!
@@ -57,4 +58,24 @@ type Query {
   building(id: String!): BuildingType!
   users: [UserType!]!
   user(id: String!): UserType!
+}
+
+type Mutation {
+  addBuilding(buildingInput: BuildingInput!): BuildingType!
+  updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
+  deleteBuilding(id: String!): BuildingType!
+  addIncidentReportToRoom(incidentReportInput: incidentReportInput!, roomName: String!, buildingId: String!): IncidentReportType!
+  addIncidentReportToDesk(incidentReportInput: incidentReportInput!, deskName: String!, roomName: String!, buildingId: String!): IncidentReportType!
+  removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
+  removeIncidentReportFromDesk(incidentReportId: String!, deskName: String!, roomName: String!, buildingId: String!): Boolean!
+}
+
+input BuildingInput {
+  name: String!
+  address: String!
+}
+
+input incidentReportInput {
+  user_id: Float!
+  message: String!
 }

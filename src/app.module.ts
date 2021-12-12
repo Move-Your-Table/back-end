@@ -2,15 +2,15 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule } from '@nestjs/config';
-import { BuildingsModule } from './buildings/buildings.module';
+import { ClientsModule, Transport } from '@nestjs/microservices';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GraphQLModule } from '@nestjs/graphql';
+import { BuildingsModule } from './buildings/buildings.module';
 import { RoomsModule } from './rooms/rooms.module';
 import { DesksModule } from './desks/desks.module';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { GraphQLModule } from '@nestjs/graphql';
+import { BookingsModule } from './bookings/bookings.module';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
 import { UsersModule } from './users/users.module';
-import { BookingsModule } from './bookings/bookings.module';
 
 
 @Module({
@@ -23,6 +23,7 @@ import { BookingsModule } from './bookings/bookings.module';
     BuildingsModule,
     RoomsModule,
     DesksModule,
+    BookingsModule,
     IncidentReportsModule,
     UsersModule,
     BookingsModule,

@@ -9,7 +9,7 @@ export class BookingsResolver {
 
     @ResolveField(returns => UserType)
     async user(@Parent() booking : BookingType) : Promise<UserType> {
-        return await this.userService.findOne(booking.user_id);
+        return await this.userService.findOne(booking.user_id.toString());
     }
 
 }

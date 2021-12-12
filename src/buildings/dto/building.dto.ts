@@ -1,4 +1,4 @@
-import { ObjectType, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
 import { RoomType } from 'src/rooms/dto/room.dto';
 
@@ -12,4 +12,13 @@ export class BuildingType {
   readonly address: string;
   @Field(type => [RoomType])
   readonly rooms: RoomType[]
+}
+
+
+@InputType()
+export class BuildingInput {
+  @Field()
+  name: string;
+  @Field()
+  address: string;
 }
