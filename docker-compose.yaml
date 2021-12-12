@@ -24,7 +24,7 @@ services:
       - MONGO_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
       - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INIT_DB=${MONGO_INIT_DB}
-      - RABBITMQ_ENDPOINT=rabbitmq_dev
+      - RABBITMQ_ENDPOINT=rabbitmq
       - RABBITMQ_PORT=5672      
   nestjs_staging:
     profiles: ["all", "staging"]
@@ -70,7 +70,7 @@ services:
       - MONGO_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
       - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INIT_DB=${MONGO_INIT_DB}
-      - RABBITMQ_ENDPOINT=rabbitmq_prod
+      - RABBITMQ_ENDPOINT=rabbitmq
       - RABBITMQ_PORT=5672
       - AUTOMATE_ENDPOINT=rust_prod
       - AUTOMATE_PORT=3030
@@ -84,10 +84,18 @@ services:
     ports:
       - ${RABBITMQ_EXTERNAL_PORT}:5672
       - ${RABBITMQ_EXTERNAL_MANAGEMENT_PORT}:15672
+    networks:
+      default:
+        aliases:
+          - rabbitmq
   rabbitmq_prod:
     profiles: ["prod"]
     image: rabbitmq:3.9.10-alpine
     container_name: RabbitMQ-Prod
+    networks:
+      default:
+        aliases:
+          - rabbitmq
   
   mongodb_dev:
     profiles: ["dev-local", "dev-container", "all", "staging"]
