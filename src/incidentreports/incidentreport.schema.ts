@@ -3,6 +3,6 @@ import { ObjectId } from 'mongodb';
 
 export const IncidentReportSchema = new Schema({
     _id: ObjectId,
-    user_id: Number,
+    user_id: String,
     message: String
 });

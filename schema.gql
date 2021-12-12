@@ -6,6 +6,7 @@ type IncidentReportType {
   _id: ID!
   user_id: String!
   message: String!
+  user: UserType!
 }
 
 type BookingType {
