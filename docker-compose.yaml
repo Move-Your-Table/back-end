@@ -47,6 +47,10 @@ services:
       - MONGO_INIT_DB=${MONGO_INIT_DB}
       - RABBITMQ_ENDPOINT=rabbitmq_dev
       - RABBITMQ_PORT=5672 
+      - AUTOMATE_ENDPOINT=rust_prod
+      - AUTOMATE_PORT=3030
+      - GATEWAY_ENDPOINT=tsed_prod
+      - GATEWAY_PORT=8080
   nestjs_prod:
     profiles: ["all", "prod"]
     image: myt/back-end:prod
@@ -67,7 +71,11 @@ services:
       - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
       - MONGO_INIT_DB=${MONGO_INIT_DB}
       - RABBITMQ_ENDPOINT=rabbitmq_prod
-      - RABBITMQ_PORT=5672      
+      - RABBITMQ_PORT=5672
+      - AUTOMATE_ENDPOINT=rust_prod
+      - AUTOMATE_PORT=3030
+      - GATEWAY_ENDPOINT=tsed_prod
+      - GATEWAY_PORT=8080   
   
   rabbitmq_dev:
     profiles: ["dev-local", "dev-container", "all", "staging"]

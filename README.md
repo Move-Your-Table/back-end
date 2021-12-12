@@ -24,6 +24,17 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
     ```
 ✅ Done! Your application should be configured & up and running. Start developing!
 
+#### Adding other services
+Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), [Automation API](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/automateapi) and [Back-End](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/back-end) share the same custom network, you can build these and get the production server up & running.
+
+- For [Automation API](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/automateapi), clone the project, navigate to the root of the project and perform the following command:
+  ```bash
+  $ docker-compose up rust_prod -d
+  ```
+- For [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), clone the project, navigate to the root of the project and perform the following command:
+  ```bash
+  $ docker-compose up tsed_prod -d
+  ```
 ## Available `start` commands
 |Command|Explication|
 |---|---|
