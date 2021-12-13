@@ -33,7 +33,7 @@ Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/proje
   ```
 - For [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), clone the project, navigate to the root of the project and perform the following command:
   ```bash
-  $ docker-compose up tsed_prod -d
+  $ npm run start:container:prod
   ```
 ## Available `start` commands
 |Command|Explication|
