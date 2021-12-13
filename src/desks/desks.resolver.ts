@@ -15,7 +15,7 @@ export class DesksResolver {
         let bookings = desk.bookings;
 
         if(id) {
-            return bookings.filter(booking => booking._id == id);
+            return bookings.filter(booking => booking._id.toString() == id);
         } else {
             if(before) {
                 bookings = bookings.filter(booking => new Date(booking.end_time) <= before);

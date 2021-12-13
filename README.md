@@ -16,63 +16,67 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
    ```
 3. In the root of the directory, use the following command:
     ```bash
+    # If you want to run everything in the container
     $ npm run start:container:dev
+
+    # If you want to run the source code offline
+    $ npm run start:local:dev
     ```
 ✅ Done! Your application should be configured & up and running. Start developing!
 
+#### Adding other services
+Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), [Automation API](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/automateapi) and [Back-End](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/back-end) share the same custom network, you can build these and get the production server up & running.
+
+- For [Automation API](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/automateapi), clone the project, navigate to the root of the project and perform the following command:
+  ```bash
+  $ docker-compose up rust_prod -d
+  ```
+- For [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), clone the project, navigate to the root of the project and perform the following command:
+  ```bash
+  $ npm run start:container:prod
+  ```
 ## Available `start` commands
-### Preferred command
-- **`npm run start:dev`**
-    
-  Start a fully **containerized** development server **with** hot-reloading capabilities.
-
-### Run app code locally
-- **`npm run start:local`**
+|Command|Explication|
+|---|---|
+|`npm run start`|Starts a development server **without** any hot-reloading capabilities, **without** any of the necessary containers. |
+|`npm run start:dev`|Start a fully **containerized** development server **with** hot-reloading capabilities, **without** any of the necessary containers.|
+|`npm run start:prod`|Starts a production-ready server, **without** any of the necessary containers.|
+|||
+|`npm run start:local`|Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.|
+|`npm run start:local:dev`|Start a development server **with** hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.|
+|`npm run start:local:prod`|Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.|
+|||
+|`npm run start:container:dev`|Starts a containerized development server, **with** hot-reloading capabilities & necessary containers|
+|`npm run start:container:staging`|Starts a containerized staging server.|
+|`npm run start:container:prod`|Starts a containerized production server.|
+|||
+|`npm run test`|Runs all unit tests|
+|`npm run test:e2e`|Runs all e2e tests|
+|`npm run test:cov`|Runs all coverage tests|
   
-  Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
-
-- **`npm run start:local:dev`**
-  
-  Start a development server **with** hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.
-
-- **`npm run start:local:prod`**
-  
-  Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.
-
-### Plain commands
-- **`npm run start:plain`**
-  
-  Starts a development server without any hot-reloading capabilities, **without any of the necessary containers.** 
-
-- **`npm run start:plain:dev`**
-  
-  Starts a development server **with** hot-reloading capabilities, **without any of the necessary containers.** 
-
-- **`npm run start:plain:prod`**
-  
-  Starts a production-ready server, **without any of the necessary containers.** 
-
-## Available `Test` commands
-- **`npm run test`**
-  
-  Runs all unit tests
-- **`npm run test:e2e`**
-  
-  Runs all e2e tests
-- **`npm run test:cov`**
-  
-  Runs all coverage tests
 # Miscellaneous
 ## `.env` configuration
 > :bulb: An example `.env` is available! Copy `.env.example` and rename it to `.env` to get started.
 
-|Key|Value explanation|Required?|Value example|
-|---|---|---|---|
-|NESTJS_PORT|The port used by Nest.JS|✔|3000|
-|COMPOSE_PROJECT_NAME|The name of the Docker-Stack|✖|MYT_Backend|
-|MONGO_ROOT_USERNAME|The name of the root user of the database|✔|root|
-|MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|zXnpa&VDpoj6RU|
-|MONGO_INITDB_DATABASE|The name of the database being used|✔|MYT|
-|MONGO_PORT|The port used by MongoDB|✔|27017|
-|RABBITMQ_PORT|The port used by RabbitMQ|✔|5672|
-|RABBITMQ_MANAGEMENT_PORT|The port used by the RabbitMQ management panel|✔|15672|
+|Key|Value explanation|Required for Development?|... Staging?|... Production?|Value example|
+|---|---|---|---|---|---|
+|COMPOSE_PROJECT_NAME|Name of the compose stack|✖|✖|✖|"MYT Back-end Server"|
+|||||||
+|NESTJS_PORT|The port used to reach the application from external networks|✔* </br> *\*If the code's running locally*|✖|✖|3000|
+|MONGO_ENDPOINT|The endpoint used by the application to reach the MongoDB|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
+|MONGO_PORT|The port used by the application to reach the MongoDB|✔* </br> *\*If the code's running locally*|✖|✖|27017|
+|AUTOMATE_ENDPOINT|The endpoint used by the application to reach the automate server|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
+|AUTOMATE_PORT|The port used by the application to reach the automate server|✔* </br> *\*If the code's running locally*|✖|✖|3000|
+|GATEWAY_ENDPOINT|The endpoint used by the application to reach the gateway server|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
+|GATEWAY_PORT|The port used by the application to reach the gateway server|✔* </br> *\*If the code's running locally*|✖|✖|3000|
+|||||||
+|MONGO_ROOT_USERNAME|The name of the root user of the database|✔|✔|✔|root|
+|MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|✔|✔|zXnpa&VDpoj6RU|
+|MONGO_INIT_DB|The name of the database being used|✔|✔|✔|MYT|
+|MONGO_EXTERNAL_PORT|The external port used to reach the database from a **external** network|✔|✔|✖|27017|
+|||||||
+|RABBITMQ_ENDPOINT|The address used **within** the container network to reach Rabbit MQ|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
+|RABBITMQ_PORT|The port used **within** the container network to communicate with Rabbit MQ|✔* </br> *\*If the code's running locally*|✖|✖|5672|
+|RABBITMQ_EXTERNAL_PORT|The port used **outside** the container network to communicate with Rabbit MQ|✔|✔|✖|5672|
+|RABBITMQ_EXTERNAL_MANAGEMENT_PORT|The port used **outside** the container network to communicate with Rabbit MQ|✔|✔|✖|15672|
+
