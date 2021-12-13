@@ -29,3 +29,16 @@ export class RoomInput {
   @Field(type => [String])
   readonly features: string[];
 }
+
+@InputType()
+export class RoomUpdateInput {
+  @Field({ nullable: true })
+  readonly name?: string;
+  @Field({ nullable: true })
+  readonly type?: string;
+  @Field({ nullable: true })
+  readonly floor?: number;
+  @Field(type => [String], { nullable: true })
+  readonly features?: string[];
+}
+

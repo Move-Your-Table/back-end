@@ -68,6 +68,7 @@ type Mutation {
   removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
   removeIncidentReportFromDesk(incidentReportId: String!, deskName: String!, roomName: String!, buildingId: String!): Boolean!
   addRoom(roomInput: RoomInput!, buildingId: String!): RoomType!
+  updateRoom(roomInput: RoomUpdateInput!, roomName: String!, buildingId: String!): RoomType!
 }
 
 input BuildingInput {
@@ -85,4 +86,11 @@ input RoomInput {
   type: String!
   floor: Float!
   features: [String!]!
+}
+
+input RoomUpdateInput {
+  name: String
+  type: String
+  floor: Float
+  features: [String!]
 }

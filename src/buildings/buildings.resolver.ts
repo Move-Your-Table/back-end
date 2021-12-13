@@ -1,6 +1,6 @@
 import { Resolver, Query, Args, Mutation, ResolveField, Parent } from '@nestjs/graphql';
 import { Room } from '../rooms/interfaces/room.interface';
-import { RoomType, RoomInput } from '../rooms/dto/room.dto';
+import { RoomType, RoomInput, RoomUpdateInput } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
@@ -130,6 +130,28 @@ export class BuildingsResolver {
       
             await this.roomService.addRoom(buildingId, newRoom);
             return newRoom;
+        }
+
+
+        @Mutation(() => RoomType)
+        async updateRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('roomInput') roomUpdateInput: RoomUpdateInput): Promise<RoomType> {
+
+            let room = await this.roomService.getRoomByName(buildingId, roomName);
+
+            const updatedRoom = { 
+              name: roomUpdateInput.name ? roomUpdateInput.name : room.name, 
+              type: roomUpdateInput.type ? roomUpdateInput.type : room.type,
+              floor: roomUpdateInput.floor ? roomUpdateInput.floor : room.floor,
+              features: roomUpdateInput.features ? roomUpdateInput.features : room.features,
+              desks: room.desks,
+              incidentReports: room.incidentReports 
+            };
+      
+            await this.roomService.updateRoom(buildingId, roomName, updatedRoom);
+            return updatedRoom;
         }
 
 }
