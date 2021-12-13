@@ -20,6 +20,8 @@ export class BookingInput {
   @Field()
   readonly user_id: string;
   @Field()
+  readonly start_time: string;
+  @Field()
   readonly end_time: string;
   @Field()
   readonly public: boolean;

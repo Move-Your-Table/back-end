@@ -7,12 +7,15 @@ import { BuildingType, BuildingInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 import { Types } from 'mongoose';
 import { IncidentReportController } from '../incidentreports/incidentreport.controller';
+import { BookingType, BookingInput} from '../bookings/dto/booking.dto';
+import { BookingsController } from '../bookings/bookings.controller';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService,
       private readonly roomService : RoomService,
-      private readonly incidentReportsController : IncidentReportController) {};
+      private readonly incidentReportsController : IncidentReportController,
+      private readonly bookingsController : BookingsController) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -62,21 +65,23 @@ export class BuildingsResolver {
         }
     }
 
-    // @Mutation(() => BookingType)
-    // async addBookingToDesk(
-    //   @Args('buildingId') buildingId: string,
-    //   @Args('roomName') roomName: string,
-    //   @Args('deskName') deskName: string,
-    //   @Args('bookingInput') BookingInput: BookingInput): Promise<BookingType> {
-    //   }
+    @Mutation(() => BookingType)
+    async addBookingToDesk(
+      @Args('buildingId') buildingId: string,
+      @Args('roomName') roomName: string,
+      @Args('deskName') deskName: string,
+      @Args('bookingInput') bookingInput: BookingInput) : Promise<BookingType> {
+        return await this.bookingsController.addBooking(buildingId, roomName, deskName, bookingInput);
+      }
 
-    // @Mutation(() => BookingType)
-    // async cancelBookingFromDesk(
-    //   @Args('buildingId') buildingId: string,
-    //   @Args('roomName') roomName: string,
-    //   @Args('deskName') deskName: string,
-    //   @Args('bookingId') bookingId: string): Promise<BookingType> {
-    //   }
+    @Mutation(() => BookingType)
+    async cancelBookingFromDesk(
+      @Args('buildingId') buildingId: string,
+      @Args('roomName') roomName: string,
+      @Args('deskName') deskName: string,
+      @Args('bookingId') bookingId: string): Promise<BookingType> {
+        return await this.bookingsController.cancelBooking(buildingId, roomName, deskName, bookingId);
+      }
 
     @Mutation(() => IncidentReportType)
     async addIncidentReportToRoom(

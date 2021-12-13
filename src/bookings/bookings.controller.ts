@@ -1,12 +1,12 @@
 import { Controller } from "@nestjs/common";
 import { BookingsService } from "./bookings.service";
-import { Booking } from "./interfaces/booking.interface";
+import { BookingInput } from "./dto/booking.dto";
 
 @Controller()
 export class BookingsController {
     constructor(private readonly bookingsService: BookingsService) {}
 
-    async addBooking(buildingId: string, roomName: string, deskName: string, booking: Booking) {
+    async addBooking(buildingId: string, roomName: string, deskName: string, booking: BookingInput) {
         if(new Date(booking.start_time).getTime() < new Date().getTime()) {
             throw "You can't book a desk in the past...";
         }
