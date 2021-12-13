@@ -115,34 +115,21 @@ export class BuildingsResolver {
         }
 
 
-
-      @Mutation(() => RoomType)
-      async addRoom(
-        @Args('buildingId') buildingId: string,
-        @Args('roomInput') roomInput: RoomInput): Promise<RoomType> {
-
-          const newRoom = { 
-            name: roomInput.name, 
-            type: roomInput.type,
-            floor: roomInput.floor,
-            features: roomInput.features,
-            desks: [],
-            incidentReports: [] };
-
-           
-          await this.roomService.addRoom(
-            buildingId, newRoom);
-  
-          return newRoom;
-
-          // console.log("the roomInput");
-          // console.log(roomInput);
-          // await this.roomService.addRoom(buildingId, roomInput);
-          // let room = await this.roomService.getRoomByName(buildingId, roomInput.name);
-          // console.log("the room");
-          // console.log(room);
-          // return room;  
-
-      }
+        @Mutation(() => RoomType)
+        async addRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomInput') roomInput: RoomInput): Promise<RoomType> {
+            const newRoom = { 
+              name: roomInput.name, 
+              type: roomInput.type,
+              floor: roomInput.floor,
+              features: roomInput.features,
+              desks: [],
+              incidentReports: [] 
+            };
+      
+            await this.roomService.addRoom(buildingId, newRoom);
+            return newRoom;
+        }
 
 }
