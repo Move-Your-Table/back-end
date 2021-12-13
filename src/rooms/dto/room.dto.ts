@@ -1,7 +1,6 @@
 import { ObjectType, Field, InputType } from '@nestjs/graphql';
 import { IncidentReportType } from '../../incidentreports/dto/incidentreport.dto';
 import { DeskType } from '../../desks/dto/desk.dto';
-import { Room } from '../interfaces/room.interface';
 
 @ObjectType()
 export class RoomType {
@@ -21,11 +20,16 @@ export class RoomType {
   readonly incidentReports : IncidentReportType[]
 }
 
-
 @InputType()
 export class RoomInput {
   @Field()
-  buildingId: string;
+  readonly name: string;
   @Field()
-  room: Room;
+  readonly type: string;
+  @Field()
+  readonly last_used: Date;
+  @Field()
+  readonly floor: number;
+  @Field(type => [String])
+  readonly features: String[];
 }

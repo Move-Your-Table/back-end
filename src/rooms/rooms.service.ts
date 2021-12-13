@@ -14,13 +14,16 @@ export class RoomService {
 
     async getRoomByName(buildingId, roomName) {
         const rooms = await this.getRooms(buildingId);
+        console.log(rooms);
         return rooms.find(room => room.name == roomName);
     }
 
     async addRoom(buildingId, room) {
         const building = await this.buildingModel.findOne({_id: buildingId});
+        console.log("adding room in service");
+        console.log(room);
         building.rooms.push(room);
-
+    
         building.save(err => {
             if(err) throw err;
             return true;

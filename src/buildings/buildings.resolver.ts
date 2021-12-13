@@ -1,12 +1,13 @@
 import { Resolver, Query, Args, Mutation, ResolveField, Parent } from '@nestjs/graphql';
 import { Room } from '../rooms/interfaces/room.interface';
-import { RoomType } from '../rooms/dto/room.dto';
+import { RoomType, RoomInput } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 import { Types } from 'mongoose';
 import { IncidentReportService } from '../incidentreports/incidentreport.service';
+
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -112,4 +113,19 @@ export class BuildingsResolver {
             return this.incidentReportService.
             removeIncidentReportFromDesk(buildingId, roomName, deskName, reportId);
         }
+
+
+
+      @Mutation(() => RoomType)
+      async addRoom(
+        @Args('buildingId') buildingId: string,
+        @Args('roomInput') roomInput: RoomInput): Promise<RoomType> {
+          console.log(roomInput);
+          if (this.roomService.addRoom(buildingId, roomInput)) {
+              let room = await this.roomService.getRoomByName(buildingId, roomInput.name);
+              console.log(room);
+              return room;  
+          }
+      }
+
 }
