@@ -64,6 +64,11 @@ export class BuildingsService {
 
     async updateBuilding(buildingId: string, name: string, address: string) {
         const building = await this.findOne(buildingId);
+
+        if(building.name != name && await this.findOneByName(name, "_id")) {
+            throw "A building with this name already exists";
+        }
+
         return await building.updateOne({"name": name, "address": address});
     }
 
