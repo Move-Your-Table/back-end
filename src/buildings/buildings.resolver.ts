@@ -175,4 +175,18 @@ export class BuildingsResolver {
             return updatedRoom;
         }
 
+
+        @Mutation(() => RoomType)
+        async removeRoom (
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string): Promise<RoomType> {
+
+            let room = await this.roomService.getRoomByName(buildingId, roomName);
+
+            if (await this.roomService.deleteRoom(buildingId, roomName)) {
+              return room;
+            }
+          }
+
+
 }
