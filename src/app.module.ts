@@ -10,13 +10,14 @@ import { RoomsModule } from './rooms/rooms.module';
 import { DesksModule } from './desks/desks.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
-import { UsersModule } from './users/users.module';
+import { GraphQLError } from 'graphql';
 
 @Module({
   imports: [
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
       playground: true,
+      formatError: handleGraphQLError
     }),
     ConfigModule.forRoot(),
     BuildingsModule,
@@ -46,4 +47,12 @@ import { UsersModule } from './users/users.module';
   controllers: [AppController],
   providers: [AppService],
 })
+
 export class AppModule {}
+
+function handleGraphQLError(error : GraphQLError) {
+  const formattedError = {
+   message: error.message || error.message
+  };
+  return formattedError;
+}
