@@ -6,7 +6,7 @@ export class IncidentReportType {
   @Field(() => ID)
   readonly _id: Types.ObjectId;
   @Field()
-  readonly user_id: number;
+  readonly user_id: string;
   @Field()
   readonly message: string;
 }
@@ -14,7 +14,7 @@ export class IncidentReportType {
 @InputType()
 export class incidentReportInput {
   @Field()
-  readonly user_id: number;
+  readonly user_id: string;
   @Field()
   readonly message: string;
 }

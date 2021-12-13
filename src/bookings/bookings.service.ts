@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { DesksService } from '../desks/desks.service';
 import { Building } from '../buildings/interfaces/building.interface';
+import { Booking } from './interfaces/booking.interface';
 
 @Injectable()
 export class BookingsService {
@@ -27,36 +28,39 @@ export class BookingsService {
             }
         );
 
-        console.log(bookings);  
-        console.log(bookings != null);
         return bookings != null;
     }
 
-    async addBooking(buildingId, roomName, deskName, booking) {
-        const building = await this.buildingModel.findOne({_id: buildingId});
-        const room = building.rooms.find(room => room.name == roomName);
-        const desk = room.desks.find(desk => desk.name == deskName);
+    async addBooking(buildingId, roomName, deskName, booking) : Promise<Booking> {
+        return new Promise(async (resolve) => {
+            const building = await this.buildingModel.findOne({_id: buildingId});
+            const room = building.rooms.find(room => room.name == roomName);
+            const desk = room.desks.find(desk => desk.name == deskName);
 
-        booking._id = new Types.ObjectId();
-        desk.bookings.push(booking);
+            booking._id = new Types.ObjectId();
+            desk.bookings.push(booking);
 
-        building.save(err => {
-            if(err) throw err;
-            return true;
+            building.save(err => {
+                if(err) throw err;
+                return resolve(booking);
+            });
         });
     }
 
-    async cancelBooking(buildingId, roomName, deskName, bookingId) {
-        const building = await this.buildingModel.findOne({_id: buildingId});
-        const room = building.rooms.find(room => room.name == roomName);
-        const desk = room.desks.find(desk => desk.name == deskName);
-        const bookingIndex = desk.bookings.findIndex(booking => booking._id.toString() == bookingId);
+    async cancelBooking(buildingId, roomName, deskName, bookingId) : Promise<Booking> {
+        return new Promise(async (resolve) => {
+            const building = await this.buildingModel.findOne({_id: buildingId});
+            const room = building.rooms.find(room => room.name == roomName);
+            const desk = room.desks.find(desk => desk.name == deskName);
+            const bookingIndex = desk.bookings.findIndex(booking => booking._id.toString() == bookingId);
+            const bookingToDelete = desk.bookings[bookingIndex];
 
-        desk.bookings.splice(bookingIndex, 1)
+            desk.bookings.splice(bookingIndex, 1)
 
-        building.save(err => {
-            if(err) throw err;
-            return true;
+            building.save(err => {
+                if(err) throw err;
+                return resolve(bookingToDelete);
+            });
         });
     }
 }
