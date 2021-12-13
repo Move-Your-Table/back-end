@@ -20,7 +20,6 @@ export class RoomsResolver {
         }
     }
 
-
     @Mutation(() => DeskType)
         async addDeskToRoom(
           @Args('buildingId') buildingId: string,
@@ -58,7 +57,6 @@ export class RoomsResolver {
         }
     }
 
-
     @Mutation(() => DeskType)
     async removeDesk (
         @Args('buildingId') buildingId: string,
@@ -71,5 +69,4 @@ export class RoomsResolver {
             return desk;
         }
     }
-
 }

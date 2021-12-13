@@ -187,6 +187,4 @@ export class BuildingsResolver {
               return room;
             }
           }
-
-
 }
