@@ -32,6 +32,11 @@ export class RoomService {
     }
 
     async updateRoom(buildingId, roomName, updateRoom) {
+        if(updateRoom.name != roomName &&
+            await this.getRoomByName(buildingId, updateRoom.name)) {
+            throw "A room with this name already exists.";
+        }
+
         const building = await this.buildingModel.findOne({_id: buildingId});
         const roomIndex = building.rooms.findIndex(room => room.name == roomName);
         
