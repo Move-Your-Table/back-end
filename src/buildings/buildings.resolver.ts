@@ -6,15 +6,13 @@ import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 import { Types } from 'mongoose';
-import { IncidentReportService } from '../incidentreports/incidentreport.service';
-import { DesksService } from 'src/desks/desks.service';
+import { IncidentReportController } from '../incidentreports/incidentreport.controller';
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
     constructor(private readonly buildingService : BuildingsService,
       private readonly roomService : RoomService,
-      private readonly deskService : DesksService,
-      private readonly incidentReportService : IncidentReportService) {};
+      private readonly incidentReportsController : IncidentReportController) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
@@ -90,7 +88,7 @@ export class BuildingsResolver {
           user_id: incidentReportInput.user_id, 
           message: incidentReportInput.message};
        
-        await this.incidentReportService.addIncidentReportToRoom(
+        await this.incidentReportsController.addIncidentReportToRoom(
           buildingId, roomName, newIncidentReport);
 
           return newIncidentReport;
@@ -106,7 +104,7 @@ export class BuildingsResolver {
             user_id: incidentReportInput.user_id, 
             message: incidentReportInput.message};
 
-          await this.incidentReportService.addIncidentReportToDesk(buildingId, roomName, 
+          await this.incidentReportsController.addIncidentReportToDesk(buildingId, roomName, 
             deskName, newIncidentReport);
 
           return newIncidentReport;
@@ -117,7 +115,7 @@ export class BuildingsResolver {
           @Args('buildingId') buildingId: string,
           @Args('roomName') roomName: string,
           @Args('incidentReportId') reportId: string): Promise<Boolean> {
-            return this.incidentReportService.
+            return this.incidentReportsController.
             removeIncidentReportFromRoom(buildingId, roomName, reportId);
         }
 
@@ -127,7 +125,7 @@ export class BuildingsResolver {
           @Args('roomName') roomName: string,
           @Args('deskName') deskName: string,
           @Args('incidentReportId') reportId: string): Promise<Boolean> {
-            return this.incidentReportService.
+            return this.incidentReportsController.
             removeIncidentReportFromDesk(buildingId, roomName, deskName, reportId);
         }
 }
