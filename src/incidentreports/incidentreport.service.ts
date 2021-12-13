@@ -16,7 +16,6 @@ export class IncidentReportService {
         return room.incidentReports;
     }
 
-
     async getIncidentReportsFromDesk(buildingId, roomName, deskName) {
         const desk = await this.deskService.getDeskInRoom(buildingId, roomName, deskName);
         return desk.incidentReports;
@@ -33,7 +32,6 @@ export class IncidentReportService {
         });
     }
 
-    
     async addIncidentReportToDesk(buildingId, roomName, deskName, incidentReport) {
         const building = await this.buildingModel.findOne({_id: buildingId});
         const room = building.rooms.find(room => room.name == roomName);
@@ -86,6 +84,4 @@ export class IncidentReportService {
             return false;
         }
     }
-
-    
 }

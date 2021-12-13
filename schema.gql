@@ -4,8 +4,9 @@
 
 type IncidentReportType {
   _id: ID!
-  user_id: Float!
+  user_id: String!
   message: String!
+  user: UserType!
 }
 
 type BookingType {
@@ -63,6 +64,8 @@ type Mutation {
   addBuilding(buildingInput: BuildingInput!): BuildingType!
   updateBuilding(buildingInput: BuildingInput!, id: String!): BuildingType!
   deleteBuilding(id: String!): BuildingType!
+  addBookingToDesk(bookingInput: BookingInput!, deskName: String!, roomName: String!, buildingId: String!): BookingType!
+  cancelBookingFromDesk(bookingId: String!, deskName: String!, roomName: String!, buildingId: String!): BookingType!
   addIncidentReportToRoom(incidentReportInput: incidentReportInput!, roomName: String!, buildingId: String!): IncidentReportType!
   addIncidentReportToDesk(incidentReportInput: incidentReportInput!, deskName: String!, roomName: String!, buildingId: String!): IncidentReportType!
   removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
@@ -76,8 +79,15 @@ input BuildingInput {
   address: String!
 }
 
+input BookingInput {
+  user_id: String!
+  start_time: String!
+  end_time: String!
+  public: Boolean!
+}
+
 input incidentReportInput {
-  user_id: Float!
+  user_id: String!
   message: String!
 }
 
