@@ -18,7 +18,7 @@ export class RoomService {
     }
 
     async addRoom(buildingId, room) {
-        if(this.getRoomByName(buildingId, room.name)) {
+        if(await this.getRoomByName(buildingId, room.name)) {
             throw "A room with this name already exists.";
         }
 

@@ -20,7 +20,7 @@ export class DesksService {
     }
 
     async addDeskToRoom(buildingId, roomName, desk) {
-        if(this.getDeskInRoom(buildingId, roomName, desk.name)) {
+        if(await this.getDeskInRoom(buildingId, roomName, desk.name)) {
             throw "A desk with this name already exists.";
         }
 

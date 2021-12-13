@@ -54,7 +54,7 @@ export class BuildingsService {
     }
 
     async createBuilding(name: string, address: string) {
-        if(this.findOneByName(name, "_id")) {
+        if(await this.findOneByName(name, "_id")) {
             throw "A building with this name already exists";
         }
 
