@@ -1,6 +1,6 @@
 import { Resolver, Query, Args, Mutation, ResolveField, Parent } from '@nestjs/graphql';
 import { Room } from '../rooms/interfaces/room.interface';
-import { RoomType } from '../rooms/dto/room.dto';
+import { RoomType, RoomInput, RoomUpdateInput } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
 import { BuildingType, BuildingInput } from './dto/building.dto';
@@ -9,6 +9,7 @@ import { Types } from 'mongoose';
 import { IncidentReportController } from '../incidentreports/incidentreport.controller';
 import { BookingType, BookingInput} from '../bookings/dto/booking.dto';
 import { BookingsController } from '../bookings/bookings.controller';
+
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
@@ -133,4 +134,59 @@ export class BuildingsResolver {
             return this.incidentReportsController.
             removeIncidentReportFromDesk(buildingId, roomName, deskName, reportId);
         }
+
+
+        @Mutation(() => RoomType)
+        async addRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomInput') roomInput: RoomInput): Promise<RoomType> {
+            const newRoom = { 
+              name: roomInput.name, 
+              type: roomInput.type,
+              floor: roomInput.floor,
+              features: roomInput.features,
+              desks: [],
+              incidentReports: [] 
+            };
+      
+            await this.roomService.addRoom(buildingId, newRoom);
+            return newRoom;
+        }
+
+
+        @Mutation(() => RoomType)
+        async updateRoom(
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string,
+          @Args('roomInput') roomUpdateInput: RoomUpdateInput): Promise<RoomType> {
+
+            let room = await this.roomService.getRoomByName(buildingId, roomName);
+
+            const updatedRoom = { 
+              name: roomUpdateInput.name ? roomUpdateInput.name : room.name, 
+              type: roomUpdateInput.type ? roomUpdateInput.type : room.type,
+              floor: roomUpdateInput.floor ? roomUpdateInput.floor : room.floor,
+              features: roomUpdateInput.features ? roomUpdateInput.features : room.features,
+              desks: room.desks,
+              incidentReports: room.incidentReports 
+            };
+      
+            await this.roomService.updateRoom(buildingId, roomName, updatedRoom);
+            return updatedRoom;
+        }
+
+
+        @Mutation(() => RoomType)
+        async removeRoom (
+          @Args('buildingId') buildingId: string,
+          @Args('roomName') roomName: string): Promise<RoomType> {
+
+            let room = await this.roomService.getRoomByName(buildingId, roomName);
+
+            if (await this.roomService.deleteRoom(buildingId, roomName)) {
+              return room;
+            }
+          }
+
+
 }

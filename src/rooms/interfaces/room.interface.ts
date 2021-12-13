@@ -5,8 +5,7 @@ export interface Room {
     readonly name: string,
     readonly type: string,
     readonly floor: number,
-    readonly last_used: Date,
-    readonly features: string
+    readonly features: string[]
     readonly incidentReports: IncidentReport[];
     readonly desks : Desk[];
 }
