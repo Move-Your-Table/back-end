@@ -20,6 +20,10 @@ export class DesksService {
     }
 
     async addDeskToRoom(buildingId, roomName, desk) {
+        if(this.getDeskInRoom(buildingId, roomName, desk.name)) {
+            throw "A desk with this name already exists.";
+        }
+
         const building = await this.buildingModel.findOne({_id: buildingId});
         const room = building.rooms.find(room => room.name == roomName);
         room.desks.push(desk);
