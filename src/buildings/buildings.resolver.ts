@@ -186,5 +186,5 @@ export class BuildingsResolver {
             if (await this.roomService.deleteRoom(buildingId, roomName)) {
               return room;
             }
-          }
+        }
 }
