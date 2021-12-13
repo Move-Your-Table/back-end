@@ -31,9 +31,8 @@ scalar DateTime
 type RoomType {
   name: String!
   type: String!
-  last_used: DateTime!
   floor: Float!
-  features: String!
+  features: [String!]!
   desks(name: String): [DeskType!]!
   incidentReports: [IncidentReportType!]!
 }
@@ -84,7 +83,6 @@ input incidentReportInput {
 input RoomInput {
   name: String!
   type: String!
-  last_used: DateTime!
   floor: Float!
   features: [String!]!
 }
