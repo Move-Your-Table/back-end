@@ -12,11 +12,10 @@ import { BookingsModule } from './bookings/bookings.module';
 import { IncidentReportsModule } from './incidentreports/incidentreport.module';
 import { UsersModule } from './users/users.module';
 
-
 @Module({
   imports: [
     GraphQLModule.forRoot({
-      autoSchemaFile: "schema.gql",
+      autoSchemaFile: 'schema.gql',
       playground: true,
     }),
     ConfigModule.forRoot(),
@@ -25,15 +24,17 @@ import { UsersModule } from './users/users.module';
     DesksModule,
     BookingsModule,
     IncidentReportsModule,
-    UsersModule,
-    BookingsModule,
-    MongooseModule.forRoot(`mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@localhost:${process.env.MONGO_PORT}/MYT?authSource=admin`),
+    MongooseModule.forRoot(
+      `mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@${process.env.MONGO_ENDPOINT}:${process.env.MONGO_PORT}/${process.env.MONGO_INIT_DB}?authSource=admin`,
+    ),
     ClientsModule.register([
       {
         name: 'MYT_SERVICE',
         transport: Transport.RMQ,
         options: {
-          urls: [`amqp://localhost:${process.env.RABBITMQ_PORT}`],
+          urls: [
+            `amqp://${process.env.RABBITMQ_ENDPOINT}:${process.env.RABBITMQ_PORT}`,
+          ],
           queue: 'frontend_queue',
           queueOptions: {
             durable: false,
