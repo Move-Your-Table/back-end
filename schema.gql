@@ -73,6 +73,9 @@ type Mutation {
   addRoom(roomInput: RoomInput!, buildingId: String!): RoomType!
   updateRoom(roomInput: RoomUpdateInput!, roomName: String!, buildingId: String!): RoomType!
   removeRoom(roomName: String!, buildingId: String!): RoomType!
+  addDeskToRoom(deskName: String!, roomName: String!, buildingId: String!): DeskType!
+  updateDesk(newDeskName: String!, deskName: String!, roomName: String!, buildingId: String!): DeskType!
+  removeDesk(deskName: String!, roomName: String!, buildingId: String!): DeskType!
 }
 
 input BuildingInput {
