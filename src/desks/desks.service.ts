@@ -26,6 +26,7 @@ export class DesksService {
 
         const building = await this.buildingModel.findOne({_id: buildingId});
         const room = building.rooms.find(room => room.name == roomName);
+
         room.desks.push(desk);
 
         building.save(err => {
@@ -35,28 +36,39 @@ export class DesksService {
     }
 
     async editDeskInRoom(buildingId, roomName, deskName, editedDesk) {
-        const building = await this.buildingModel.findOne({_id: buildingId});
-        const room = building.rooms.find(room => room.name == roomName);
-        const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
+        return new Promise(async (resolve) => {
+            const building = await this.buildingModel.findOne({_id: buildingId});
+            const room = building.rooms.find(room => room.name == roomName);
+            const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
 
-        room.desks[deskIndex] = editedDesk;
+            room.desks[deskIndex] = editedDesk;
 
-        building.save(err => {
-            if(err) throw err;
-            return true;
+            building.save(err => {
+                if(err) throw err;
+                return resolve(true);
+            });
         });
     }
     
     async deleteDeskInRoom(buildingId, roomName, deskName) {
-        const building = await this.buildingModel.findOne({_id: buildingId});
-        const room = building.rooms.find(room => room.name == roomName);
-        const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
+        return new Promise(async (resolve) => {
+            const building = await this.buildingModel.findOne({_id: buildingId});
+            const room = building.rooms.find(room => room.name == roomName);
+            const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
 
-        room.desks.splice(deskIndex, 1);
+            if(deskIndex != -1) {
+                room.desks.splice(deskIndex, 1);
 
-        building.save(err => {
-            if(err) throw err;
-            return true;
+                building.save(err => {
+                    if(err) throw err;
+                    return resolve(true);
+                }); 
+
+                return resolve(true);
+            } else {
+                return resolve(false);
+            }
+          
         });
     }
 }

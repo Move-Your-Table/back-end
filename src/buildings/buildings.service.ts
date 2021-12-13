@@ -76,5 +76,4 @@ export class BuildingsService {
         const building = await this.findOne(buildingId);
         return await building.deleteOne({});
     }
-
 }

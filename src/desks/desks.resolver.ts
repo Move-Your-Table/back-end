@@ -6,7 +6,7 @@ import { DeskType } from '../desks/dto/desk.dto';
 export class DesksResolver {
     constructor() {};
 
-    @ResolveField(returns => Array<BookingType>())
+    @ResolveField(() => Array<BookingType>())
     bookings(@Parent() desk : DeskType,
     @Args('_id', { type: () => String, nullable: true }) id?: string,
     @Args('before', { type: () => Date, nullable: true }) before?: Date,

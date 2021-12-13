@@ -32,9 +32,8 @@ scalar DateTime
 type RoomType {
   name: String!
   type: String!
-  last_used: DateTime!
   floor: Float!
-  features: String!
+  features: [String!]!
   desks(name: String): [DeskType!]!
   incidentReports: [IncidentReportType!]!
 }
@@ -71,6 +70,12 @@ type Mutation {
   addIncidentReportToDesk(incidentReportInput: incidentReportInput!, deskName: String!, roomName: String!, buildingId: String!): IncidentReportType!
   removeIncidentReportFromRoom(incidentReportId: String!, roomName: String!, buildingId: String!): Boolean!
   removeIncidentReportFromDesk(incidentReportId: String!, deskName: String!, roomName: String!, buildingId: String!): Boolean!
+  addRoom(roomInput: RoomInput!, buildingId: String!): RoomType!
+  updateRoom(roomInput: RoomUpdateInput!, roomName: String!, buildingId: String!): RoomType!
+  removeRoom(roomName: String!, buildingId: String!): RoomType!
+  addDeskToRoom(deskName: String!, roomName: String!, buildingId: String!): DeskType!
+  updateDesk(newDeskName: String!, deskName: String!, roomName: String!, buildingId: String!): DeskType!
+  removeDesk(deskName: String!, roomName: String!, buildingId: String!): DeskType!
 }
 
 input BuildingInput {
@@ -88,4 +93,18 @@ input BookingInput {
 input incidentReportInput {
   user_id: String!
   message: String!
+}
+
+input RoomInput {
+  name: String!
+  type: String!
+  floor: Float!
+  features: [String!]!
+}
+
+input RoomUpdateInput {
+  name: String
+  type: String
+  floor: Float
+  features: [String!]
 }

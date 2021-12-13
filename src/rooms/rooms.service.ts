@@ -24,7 +24,7 @@ export class RoomService {
 
         const building = await this.buildingModel.findOne({_id: buildingId});
         building.rooms.push(room);
-
+    
         building.save(err => {
             if(err) throw err;
             return true;
@@ -44,14 +44,17 @@ export class RoomService {
     }
 
     async deleteRoom(buildingId, roomName) {
-        const building = await this.buildingModel.findOne({_id: buildingId});
-        const roomIndex = building.rooms.findIndex(room => room.name == roomName);
+        return new Promise(async (resolve) => {
+            const building = await this.buildingModel.findOne({_id: buildingId});
+            const roomIndex = building.rooms.findIndex(room => room.name == roomName);
         
-        building.rooms.splice(roomIndex);
-    
-        building.save(err => {
-            if(err) throw err;
-            return true;
+            building.rooms.splice(roomIndex);
+        
+            building.save(err => {
+                if(err) throw err;
+                return resolve(true);
+            });           
         });
+
     }
 }
