@@ -421,4 +421,7 @@ dist
 # and uncomment the following lines
 # .pnp.*
 
+# GraphQL automatically generated schema
+schema.gql
+
 # End of https://www.toptal.com/developers/gitignore/api/yarn
