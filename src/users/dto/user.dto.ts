@@ -7,11 +7,15 @@ export class UserType {
   @Field(() => ID)
   readonly _id: ObjectId;
   @Field()
-  readonly username: string;
+  readonly first_name: string;
+  @Field()
+  readonly last_name: string;
   @Field()
   readonly email: string;
   @Field()
   readonly phonenumber: string;
+  @Field()
+  readonly company: string;
   @Field()
   readonly role: Role;
 }
