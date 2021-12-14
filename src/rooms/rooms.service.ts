@@ -18,6 +18,10 @@ export class RoomService {
     }
 
     async addRoom(buildingId, room) {
+        if(await this.getRoomByName(buildingId, room.name)) {
+            throw "A room with this name already exists.";
+        }
+
         const building = await this.buildingModel.findOne({_id: buildingId});
         building.rooms.push(room);
     
@@ -28,6 +32,11 @@ export class RoomService {
     }
 
     async updateRoom(buildingId, roomName, updateRoom) {
+        if(updateRoom.name != roomName &&
+            await this.getRoomByName(buildingId, updateRoom.name)) {
+            throw "A room with this name already exists.";
+        }
+
         const building = await this.buildingModel.findOne({_id: buildingId});
         const roomIndex = building.rooms.findIndex(room => room.name == roomName);
         
