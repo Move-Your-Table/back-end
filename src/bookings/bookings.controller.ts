@@ -46,7 +46,8 @@ export class BookingsController {
             endTime: newBooking.end_time,
             reserved_for: {
                 id: user._id,
-                username: user.username,
+                first_name: user.first_name,
+                last_name: user.last_name,
                 email: user.email,
                 phonenumber: user.phonenumber,
                 role: user.role

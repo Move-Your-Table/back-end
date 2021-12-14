@@ -54,9 +54,11 @@ type BuildingType {
 
 type UserType {
   _id: ID!
-  username: String!
+  first_name: String!
+  last_name: String!
   email: String!
   phonenumber: String!
+  company: String!
   role: String!
 }
 
