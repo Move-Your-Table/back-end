@@ -10,8 +10,8 @@ export class DesksResolver {
     bookings(@Parent() desk : DeskType,
     @Args('_id', { type: () => String, nullable: true }) id?: string,
     @Args('before', { type: () => Date, nullable: true }) before?: Date,
-    @Args('after', { type: () => Date, nullable: true }) after?: Date) : Array<BookingType> {
-
+    @Args('after', { type: () => Date, nullable: true }) after?: Date,
+    @Args('at', { type: () => Date, nullable: true }) at?: Date) : Array<BookingType> {
         let bookings = desk.bookings;
 
         if(id) {
@@ -23,6 +23,12 @@ export class DesksResolver {
 
             if(after) {
                 bookings = bookings.filter(booking => new Date(booking.start_time) >= after);
+            }
+
+            if(at) {
+                bookings = bookings
+                .filter(booking => new Date(booking.start_time) <= at
+                && new Date(booking.end_time) >= at);
             }
 
             return bookings;
