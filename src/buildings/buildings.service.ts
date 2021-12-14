@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { Address } from './interfaces/address.interface';
 import { Building } from './interfaces/building.interface';
 
 @Injectable()
@@ -53,7 +54,7 @@ export class BuildingsService {
         });
     }
 
-    async createBuilding(name: string, address: string) {
+    async createBuilding(name: string, address: Address) {
         if(await this.findOneByName(name, "_id")) {
             throw "A building with this name already exists";
         }
@@ -62,7 +63,7 @@ export class BuildingsService {
         return await this.buildingModel.create({"_id": id, "name": name, "address": address});
     }
 
-    async updateBuilding(buildingId: string, name: string, address: string) {
+    async updateBuilding(buildingId: string, name: string, address: Address) {
         const building = await this.findOne(buildingId);
 
         if(building.name != name && await this.findOneByName(name, "_id")) {

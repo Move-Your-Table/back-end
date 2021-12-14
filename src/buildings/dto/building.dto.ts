@@ -1,6 +1,7 @@
 import { ObjectType, Field, ID, InputType } from '@nestjs/graphql';
 import { ObjectId } from 'mongodb';
-import { RoomType } from 'src/rooms/dto/room.dto';
+import { AddressInput, AddressType } from './address.dto';
+import { RoomType } from '../../rooms/dto/room.dto';
 
 @ObjectType()
 export class BuildingType {
@@ -9,7 +10,7 @@ export class BuildingType {
   @Field()
   readonly name: string;
   @Field()
-  readonly address: string;
+  readonly address: AddressType;
   @Field(type => [RoomType])
   readonly rooms: RoomType[]
 }
@@ -20,5 +21,5 @@ export class BuildingInput {
   @Field()
   name: string;
   @Field()
-  address: string;
+  address: AddressInput;
 }

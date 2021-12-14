@@ -38,10 +38,17 @@ type RoomType {
   incidentReports: [IncidentReportType!]!
 }
 
+type AddressType {
+  country: String!
+  postalcode: String!
+  city: String!
+  street: String!
+}
+
 type BuildingType {
   _id: ID!
   name: String!
-  address: String!
+  address: AddressType!
   rooms(name: String): [RoomType!]!
 }
 
@@ -80,7 +87,14 @@ type Mutation {
 
 input BuildingInput {
   name: String!
-  address: String!
+  address: AddressInput!
+}
+
+input AddressInput {
+  country: String!
+  postalcode: String!
+  city: String!
+  street: String!
 }
 
 input BookingInput {
