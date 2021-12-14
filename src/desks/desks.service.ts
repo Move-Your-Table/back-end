@@ -36,12 +36,12 @@ export class DesksService {
     }
 
     async editDeskInRoom(buildingId, roomName, deskName, editedDesk) {
+        if(deskName != editedDesk.name &&
+            await this.getDeskInRoom(buildingId, roomName, editedDesk.name)) {
+            throw "A desk with this name already exists.";
+        }
+        
         return new Promise(async (resolve) => {
-            if(deskName != editedDesk.name &&
-                await this.getDeskInRoom(buildingId, roomName, editedDesk.name)) {
-                throw "A desk with this name already exists.";
-            }
-
             const building = await this.buildingModel.findOne({_id: buildingId});
             const room = building.rooms.find(room => room.name == roomName);
             const deskIndex = room.desks.findIndex(desk => desk.name == deskName);
