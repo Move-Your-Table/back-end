@@ -4,6 +4,7 @@ import { BookingsService } from "./bookings.service";
 import { BookingInput } from "./dto/booking.dto";
 import { BuildingsService } from "../buildings/buildings.service";
 import { UsersService } from "../users/users.service";
+import { ApolloError } from "apollo-server-core";
 
 @Controller()
 export class BookingsController {
@@ -14,15 +15,15 @@ export class BookingsController {
 
     async addBooking(buildingId: string, roomName: string, deskName: string, booking: BookingInput) {
         if(new Date(booking.start_time).getTime() < new Date().getTime()) {
-            throw "You can't book a desk in the past...";
+            throw new ApolloError("You can't book a desk in the past...");
         }
 
         if(new Date(booking.end_time).getTime() < new Date(booking.start_time).getTime()) {
-            throw "The end time of your booking has to be after the start time.";
+            throw new ApolloError("The end time of your booking has to be after the start time.");
         }  
 
         if(await this.bookingsService.hasBookingsInTimeRange(buildingId, roomName, deskName, booking.start_time, booking.end_time)) {
-            throw "The desk has already been booked at that time.";
+            throw new ApolloError("The desk has already been booked at that time.");
         }
 
         const building = await this.buildingService.findOne(buildingId);

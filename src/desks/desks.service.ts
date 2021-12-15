@@ -3,6 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { RoomService } from '../rooms/rooms.service';
 import { Building } from '../buildings/interfaces/building.interface';
+import { ApolloError } from 'apollo-server-core';
 
 @Injectable()
 export class DesksService {
@@ -21,7 +22,7 @@ export class DesksService {
 
     async addDeskToRoom(buildingId, roomName, desk) {
         if(await this.getDeskInRoom(buildingId, roomName, desk.name)) {
-            throw "A desk with this name already exists.";
+            throw new ApolloError("A desk with this name already exists.");
         }
 
         const building = await this.buildingModel.findOne({_id: buildingId});
@@ -38,7 +39,7 @@ export class DesksService {
     async editDeskInRoom(buildingId, roomName, deskName, editedDesk) {
         if(deskName != editedDesk.name &&
             await this.getDeskInRoom(buildingId, roomName, editedDesk.name)) {
-            throw "A desk with this name already exists.";
+            throw new ApolloError("A desk with this name already exists.");
         }
         
         return new Promise(async (resolve) => {

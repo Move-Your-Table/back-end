@@ -57,7 +57,7 @@ export class BuildingsService {
 
     async createBuilding(name: string, address: Address) {
         if(await this.findOneByName(name, "_id")) {
-            throw "A building with this name already exists";
+            throw new ApolloError("A building with this name already exists");
         }
 
         const id = new Types.ObjectId;
@@ -69,7 +69,7 @@ export class BuildingsService {
 
         if(building.name != updateInput.name && 
             await this.findOneByName(updateInput.name, "_id")) {
-            throw "A building with this name already exists";
+            throw new ApolloError("A building with this name already exists");
         }
 
         const updatedBuilding = {
