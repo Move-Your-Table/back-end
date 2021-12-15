@@ -4,5 +4,6 @@ import { Booking } from '../../bookings/interfaces/booking.interface'
 export interface Desk {
     readonly name: string,
     readonly incidentReports: IncidentReport[],
-    readonly bookings: Booking[]
+    readonly bookings: Booking[],
+    readonly features: string[]
 }
