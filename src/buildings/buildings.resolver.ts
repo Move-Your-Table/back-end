@@ -53,6 +53,13 @@ export class BuildingsResolver {
         return await this.buildingController.deleteBuilding(id);
     }
       
+
+    @ResolveField(returns => Number)
+    async roomCount(@Parent() building : BuildingType) : Promise<number> {
+      const buildingId = building._id;
+      const rooms = await this.roomService.getRooms(buildingId);
+      return rooms.length;
+    }
       
     @ResolveField(returns => [RoomType])
     async rooms(@Parent() building : BuildingType,
