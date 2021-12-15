@@ -23,3 +23,15 @@ export class AddressInput {
     @Field()
     readonly street: string;
 }
+
+@InputType()
+export class AddressUpdate {
+    @Field()
+    readonly country?: string;
+    @Field()
+    readonly postalcode?: string;
+    @Field()
+    readonly city?: string;
+    @Field()
+    readonly street?: string;
+}

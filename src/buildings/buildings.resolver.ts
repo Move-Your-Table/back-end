@@ -3,53 +3,54 @@ import { Room } from '../rooms/interfaces/room.interface';
 import { RoomType, RoomInput, RoomUpdateInput } from '../rooms/dto/room.dto';
 import { RoomService } from '../rooms/rooms.service';
 import { BuildingsService } from './buildings.service';
-import { BuildingType, BuildingInput } from './dto/building.dto';
+import { BuildingType, BuildingInput, BuildingUpdateInput } from './dto/building.dto';
 import { incidentReportInput, IncidentReportType } from '../incidentreports/dto/incidentreport.dto';
 import { Types } from 'mongoose';
 import { IncidentReportController } from '../incidentreports/incidentreport.controller';
 import { BookingType, BookingInput} from '../bookings/dto/booking.dto';
 import { BookingsController } from '../bookings/bookings.controller';
+import { BuildingController } from './building.controller';
 
 
 @Resolver(of => BuildingType)
 export class BuildingsResolver {
-    constructor(private readonly buildingService : BuildingsService,
+    constructor(private readonly buildingController : BuildingController,
       private readonly roomService : RoomService,
       private readonly incidentReportsController : IncidentReportController,
       private readonly bookingsController : BookingsController) {};
     
     @Query(() => [BuildingType])
     async buildings(): Promise<BuildingType[]> {
-        return this.buildingService.findAll();
+        return this.buildingController.getAllBuildings();
     }
 
     @Query(() => BuildingType, {name: 'building'})
     async getBuilding(@Args('id', { type: () => String }) id: string) {
-      return this.buildingService.findOne(id);
+      return this.buildingController.getBuilding(id);
     }
 
 
     @Mutation(() => BuildingType)
     async addBuilding(
       @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
-        return this.buildingService.createBuilding(buildingInput.name, buildingInput.address);
+        return this.buildingController.addBuilding(buildingInput.name, buildingInput.address);
     }
 
     @Mutation(() => BuildingType)
     async updateBuilding(
       @Args('id') id: string,
-      @Args('buildingInput') buildingInput: BuildingInput): Promise<BuildingType> {
-        let updatedBuilding = await this.buildingService.updateBuilding(id, buildingInput.name, buildingInput.address);
+      @Args('buildingInput') buildingInput: BuildingUpdateInput): Promise<BuildingType> {
+        let updatedBuilding = await this.buildingController.updateBuilding(id, buildingInput);
         if (updatedBuilding.acknowledged !== true) {
             return null;
         }
-        return this.buildingService.findOne(id);
+        return this.buildingController.getBuilding(id);
     }
 
     @Mutation(() => BuildingType)
     async deleteBuilding(
       @Args('id') id: string) {
-        return await this.buildingService.deleteBuilding(id);
+        return await this.buildingController.deleteBuilding(id);
     }
       
       

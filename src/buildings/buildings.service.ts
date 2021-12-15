@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
+import { BuildingUpdateInput } from './dto/building.dto';
 import { Address } from './interfaces/address.interface';
 import { Building } from './interfaces/building.interface';
 
@@ -63,14 +64,27 @@ export class BuildingsService {
         return await this.buildingModel.create({"_id": id, "name": name, "address": address});
     }
 
-    async updateBuilding(buildingId: string, name: string, address: Address) {
+    async updateBuilding(buildingId: string, updateInput : BuildingUpdateInput) {
         const building = await this.findOne(buildingId);
 
-        if(building.name != name && await this.findOneByName(name, "_id")) {
+        if(building.name != updateInput.name && 
+            await this.findOneByName(updateInput.name, "_id")) {
             throw "A building with this name already exists";
         }
 
-        return await building.updateOne({"name": name, "address": address});
+        const updatedBuilding = {
+            _id: building.id,
+            name: updateInput.name ? updateInput.name : building.name,
+            address: updateInput.address ? {
+                country: updateInput.address.country ? updateInput.address.country : updateInput.address.country,
+                postalcode: updateInput.address.postalcode ? updateInput.address.postalcode : updateInput.address.postalcode,
+                city: updateInput.address.city ? updateInput.address.city : updateInput.address.city,
+                street: updateInput.address.street ? updateInput.address.street : updateInput.address.street,
+            } : building.address
+        }
+
+        return await building.updateOne({"name": updatedBuilding.name, 
+        "address": updatedBuilding.address});
     }
 
     async deleteBuilding(buildingId: string) {
