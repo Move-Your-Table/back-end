@@ -1,6 +1,8 @@
 import { Controller, Get } from "@nestjs/common";
 import { BuildingsService } from "./buildings.service";
+import { BuildingUpdateInput } from "./dto/building.dto";
 import { Address } from "./interfaces/address.interface";
+import { Building } from "./interfaces/building.interface";
 
 
 @Controller()
@@ -19,8 +21,8 @@ export class BuildingController {
         return this.buildingService.createBuilding(name, address);
     }
 
-    updateBuilding(buildingId: string, name: string, address: Address) {
-        return this.buildingService.updateBuilding(buildingId, name, address);
+    async updateBuilding(buildingId: string, updateInput : BuildingUpdateInput) {
+        return this.buildingService.updateBuilding(buildingId, updateInput);
     }
 
     deleteBuilding(buildingId: string) {
