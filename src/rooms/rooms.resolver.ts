@@ -1,7 +1,7 @@
 import { Resolver, ResolveField, Parent, Args, Mutation } from '@nestjs/graphql';
 import { RoomService } from './rooms.service';
 import { RoomType } from './dto/room.dto';
-import { DeskType } from '../desks/dto/desk.dto';
+import { DeskInput, DeskType } from '../desks/dto/desk.dto';
 import { DesksService } from 'src/desks/desks.service';
 
 @Resolver(of => RoomType)
@@ -26,19 +26,20 @@ export class RoomsResolver {
     }
 
     @Mutation(() => DeskType)
-        async addDeskToRoom(
-          @Args('buildingId') buildingId: string,
-          @Args('roomName') roomName: string,
-          @Args('deskName') deskName: string): Promise<DeskType> {
-            const newDesk = { 
-              name: deskName, 
-              incidentReports: [],
-              bookings: [],
-            };
-      
-            await this.deskService.addDeskToRoom(buildingId, roomName, newDesk);
-            return newDesk;
-        }
+    async addDeskToRoom(
+        @Args('buildingId') buildingId: string,
+        @Args('roomName') roomName: string,
+        @Args('deskInput') deskInput: DeskInput): Promise<DeskType> {
+        const newDesk = { 
+            name: deskInput.name, 
+            features: deskInput.features,
+            incidentReports: [],
+            bookings: [],
+        };
+    
+        await this.deskService.addDeskToRoom(buildingId, roomName, newDesk);
+        return newDesk;
+    }
 
 
     @Mutation(() => DeskType)
@@ -46,12 +47,13 @@ export class RoomsResolver {
         @Args('buildingId') buildingId: string,
         @Args('roomName') roomName: string,
         @Args('deskName') deskName: string,
-        @Args('newDeskName') newDeskName: string): Promise<DeskType> {
+        @Args('deskInput') deskInput?: DeskInput): Promise<DeskType> {
 
         let desk = await this.deskService.getDeskInRoom(buildingId, roomName, deskName);
 
         const updatedDesk = { 
-            name: newDeskName, 
+            name: deskInput.name ? deskInput.name : desk.name,
+            features: deskInput.features ? deskInput.features : desk.features,
             incidentReports: desk.incidentReports,
             bookings: desk.bookings,
 
