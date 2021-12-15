@@ -9,6 +9,11 @@ export class RoomsResolver {
     constructor(private readonly roomService : RoomService,
         private readonly deskService : DesksService) {};
 
+    @ResolveField(returns => Number)
+    async deskCount(@Parent() room : RoomType) : Promise<number> {
+        return room.desks.length;
+    }
+
     @ResolveField(returns => Array<DeskType>())
     desks(@Parent() room : RoomType,
     @Args('name', { type: () => String, nullable: true }) name?: string) : Array<DeskType> {
