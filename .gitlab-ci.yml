@@ -1,0 +1,8 @@
+image: node:lts
+
+before_script:
+  - yarn install --quiet
+
+production:
+  script:
+    - yarn build

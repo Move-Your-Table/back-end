@@ -63,15 +63,23 @@ export class BuildingsResolver {
       
     @ResolveField(returns => [RoomType])
     async rooms(@Parent() building : BuildingType,
-    @Args('name', { type: () => String, nullable: true }) name?: string) : Promise<Room[]> {
+    @Args('name', { type: () => String, nullable: true }) name?: string,
+    @Args('type', { type: () => String, nullable: true }) type?: string) : Promise<Room[]> {
         const buildingId = building._id;
+        let rooms = new Array<Room>();
 
         if(name) {
           const room = await this.roomService.getRoomByName(buildingId, name);
-          return room ? [room] : new Array<Room>();
+          rooms =  room ? [room] : new Array<Room>();
         } else {
-          return this.roomService.getRooms(buildingId);
+          rooms = await this.roomService.getRooms(buildingId);
         }
+
+        if(type) {
+          rooms = rooms.filter(room => room.type === type);
+        }
+
+        return rooms;
     }
 
     @Mutation(() => BookingType)
