@@ -11,12 +11,17 @@ export class DesksResolver {
     @Args('_id', { type: () => String, nullable: true }) id?: string,
     @Args('before', { type: () => Date, nullable: true }) before?: Date,
     @Args('after', { type: () => Date, nullable: true }) after?: Date,
-    @Args('at', { type: () => Date, nullable: true }) at?: Date) : Array<BookingType> {
+    @Args('at', { type: () => Date, nullable: true }) at?: Date,
+    @Args('user_id', { type: () => String, nullable: true }) user_id?: String) : Array<BookingType> {
         let bookings = desk.bookings;
 
         if(id) {
             return bookings.filter(booking => booking._id.toString() == id);
-        } else {
+        } 
+        else if(user_id) {
+            return bookings.filter(booking => booking.user_id.toString() == user_id);
+        } 
+        else {
             if(before) {
                 bookings = bookings.filter(booking => new Date(booking.end_time) <= before);
             }
