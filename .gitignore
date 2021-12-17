@@ -424,4 +424,7 @@ dist
 # GraphQL automatically generated schema
 schema.gql
 
+# Package lock because we use yarn
+package-lock.json
+
 # End of https://www.toptal.com/developers/gitignore/api/yarn
