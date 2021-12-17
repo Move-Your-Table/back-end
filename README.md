@@ -12,15 +12,15 @@ The MYT Back-end handles all requested relating to desk, rooms & building inform
 1. Copy the `.env.example` file, rename it `.env` and configure it, as described in the [`.env` configuration section](#env-configuration)
 2. Install the needed packages
    ```bash
-   $ npm install
+   $ yarn install
    ```
 3. In the root of the directory, use the following command:
     ```bash
     # If you want to run everything in the container
-    $ npm run start:container:dev
+    $ yarn start:container:dev
 
     # If you want to run the source code offline
-    $ npm run start:local:dev
+    $ yarn start:local:dev
     ```
 ✅ Done! Your application should be configured & up and running. Start developing!
 
@@ -33,26 +33,26 @@ Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/proje
   ```
 - For [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/projects/hybrid-work1/gateway), clone the project, navigate to the root of the project and perform the following command:
   ```bash
-  $ npm run start:container:prod
+  $ yarn start:container:prod
   ```
 ## Available `start` commands
 |Command|Explication|
 |---|---|
-|`npm run start`|Starts a development server **without** any hot-reloading capabilities, **without** any of the necessary containers. |
-|`npm run start:dev`|Start a fully **containerized** development server **with** hot-reloading capabilities, **without** any of the necessary containers.|
-|`npm run start:prod`|Starts a production-ready server, **without** any of the necessary containers.|
+|`yarn run start`|Starts a development server **without** any hot-reloading capabilities, **without** any of the necessary containers. |
+|`yarn run start:dev`|Start a fully **containerized** development server **with** hot-reloading capabilities, **without** any of the necessary containers.|
+|`yarn run start:prod`|Starts a production-ready server, **without** any of the necessary containers.|
 |||
-|`npm run start:local`|Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.|
+|`yarn run start:local`|Start a development server without any hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.|
 |`npm run start:local:dev`|Start a development server **with** hot-reloading capabilities, where **the app is runned locally**, but the needed containers are started.|
 |`npm run start:local:prod`|Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.|
 |||
-|`npm run start:container:dev`|Starts a containerized development server, **with** hot-reloading capabilities & necessary containers|
-|`npm run start:container:staging`|Starts a containerized staging server.|
-|`npm run start:container:prod`|Starts a containerized production server.|
+|`yarn run start:container:dev`|Starts a containerized development server, **with** hot-reloading capabilities & necessary containers|
+|`yarn run start:container:staging`|Starts a containerized staging server.|
+|`yarn run start:container:prod`|Starts a containerized production server.|
 |||
-|`npm run test`|Runs all unit tests|
-|`npm run test:e2e`|Runs all e2e tests|
-|`npm run test:cov`|Runs all coverage tests|
+|`yarn run test`|Runs all unit tests|
+|`yarn run test:e2e`|Runs all e2e tests|
+|`yarn run test:cov`|Runs all coverage tests|
   
 # Miscellaneous
 ## `.env` configuration
