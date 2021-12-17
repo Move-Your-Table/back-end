@@ -1,5 +1,6 @@
 FROM mongo:5.0.4
 
-COPY ./docker/startup_db.js /docker-entrypoint-initdb.d/startup_db.js
+WORKDIR /docker-entrypoint-initdb.d
+COPY ./docker/startup_db.js .
 
 EXPOSE 27017
