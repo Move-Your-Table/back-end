@@ -69,7 +69,7 @@ db.buildings.insertMany([{
   },
   rooms: [
     {
-      name: 'Room 1',
+      name: 'Room 0.1',
       type: 'normal',
       floor: 0,
       features: ["Fridge", "A/C unit"],
@@ -111,6 +111,60 @@ db.buildings.insertMany([{
               public: true,
             },
           ],
+        },
+        {
+          name: 'Desk 2',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 3',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 4',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 5',
+          incidentReports: [],
+          bookings: [],
+        },
+      ],
+    },
+    {
+      name: 'Room 0.2',
+      type: 'normal',
+      floor: 0,
+      features: [],
+      incidentReports: [],
+      desks: [
+        {
+          name: 'Desk 1',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 2',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 3',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 4',
+          incidentReports: [],
+          bookings: [],
+        },
+        {
+          name: 'Desk 5',
+          incidentReports: [],
+          bookings: [],
         },
       ],
     },
