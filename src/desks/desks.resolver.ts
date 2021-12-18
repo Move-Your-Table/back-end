@@ -32,8 +32,7 @@ export class DesksResolver {
 
             if(at) {
                 bookings = bookings
-                .filter(booking => new Date(booking.start_time) <= at
-                && new Date(booking.end_time) >= at);
+                .filter(booking => new Date(booking.start_time).getDate() == at.getDate());
             }
 
             return bookings;

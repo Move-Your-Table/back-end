@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ApolloError } from 'apollo-server-core';
 import { Model, Types } from 'mongoose';
 import { BuildingUpdateInput } from './dto/building.dto';
 import { Address } from './interfaces/address.interface';
@@ -57,7 +58,7 @@ export class BuildingsService {
 
     async createBuilding(name: string, address: Address) {
         if(await this.findOneByName(name, "_id")) {
-            throw "A building with this name already exists";
+            throw new ApolloError("A building with this name already exists");
         }
 
         const id = new Types.ObjectId;
@@ -69,7 +70,7 @@ export class BuildingsService {
 
         if(building.name != updateInput.name && 
             await this.findOneByName(updateInput.name, "_id")) {
-            throw "A building with this name already exists";
+            throw new ApolloError("A building with this name already exists");
         }
 
         const updatedBuilding = {
