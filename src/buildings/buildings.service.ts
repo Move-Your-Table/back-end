@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
+import { ApolloError } from 'apollo-server-core';
 import { Model, Types } from 'mongoose';
 import { BuildingUpdateInput } from './dto/building.dto';
 import { Address } from './interfaces/address.interface';
