@@ -425,3 +425,6 @@ dist
 schema.gql
 
 # End of https://www.toptal.com/developers/gitignore/api/yarn
+
+# Only use YARN!
+package-lock.json

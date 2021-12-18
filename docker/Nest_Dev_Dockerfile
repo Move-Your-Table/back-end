@@ -2,12 +2,12 @@ FROM node:lts-alpine3.14
 
 WORKDIR /usr/src/app
 COPY package*.json ./
-RUN npm install --only=development
+RUN yarn install --only=development
 COPY . .
 
-RUN npm run build
+RUN yarn build
 
 EXPOSE 3000
-CMD [ "npm", "run", "start:dev" ]
+CMD [ "yarn", "start:dev" ]
 
 
