@@ -1,9 +1,7 @@
-import { Controller, Get } from "@nestjs/common";
+import { Controller } from "@nestjs/common";
 import { BuildingsService } from "./buildings.service";
 import { BuildingUpdateInput } from "./dto/building.dto";
 import { Address } from "./interfaces/address.interface";
-import { Building } from "./interfaces/building.interface";
-
 
 @Controller()
 export class BuildingController {
