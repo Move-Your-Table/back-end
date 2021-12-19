@@ -6,7 +6,7 @@ services:
     image: myt/back-end:dev
     container_name: Nest.JS-Dev
     ports:
-      - ${NESTJS_PORT}:3000
+      - ${NESTJS_EXPOSE_PORT}:${NESTJS_PORT}
     build:
       dockerfile: ./docker/Nest_Dev_Dockerfile
       context: .
@@ -18,18 +18,18 @@ services:
       - mongodb_dev
       - rabbitmq_dev
     environment:
-      - NESTJS_PORT=3000
-      - MONGO_ENDPOINT=mongodb
-      - MONGO_PORT=27017
-      - MONGO_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INIT_DB=${MONGO_INIT_DB}
-      - RABBITMQ_ENDPOINT=rabbitmq
-      - RABBITMQ_PORT=5672
-      - AUTOMATE_ENDPOINT=rust
-      - AUTOMATE_PORT=3030
-      - GATEWAY_ENDPOINT=tsed
-      - GATEWAY_PORT=8080
+      - NESTJS_PORT=${NESTJS_PORT}
+      - MONGO_ENDPOINT=${DOCKER_MONGO_ENDPOINT}
+      - MONGO_PORT=${DOCKER_MONGO_PORT}
+      - MONGO_USERNAME=${DOCKER_MONGO_ROOT_USERNAME}
+      - MONGO_PASSWORD=${DOCKER_MONGO_ROOT_PASSWORD}
+      - MONGO_DB=${DOCKER_MONGO_INIT_DB}
+      - RABBITMQ_ENDPOINT=${DOCKER_RABBITMQ_ENDPOINT}
+      - RABBITMQ_PORT=${DOCKER_RABBITMQ_PORT}
+      - AUTOMATE_ENDPOINT=${DOCKER_AUTOMATE_ENDPOINT}
+      - AUTOMATE_PORT=${DOCKER_AUTOMATE_PORT}
+      - GATEWAY_ENDPOINT=${DOCKER_GATEWAY_ENDPOINT}
+      - GATEWAY_PORT=${DOCKER_GATEWAY_PORT}
     networks:
       default:
         aliases:
@@ -37,10 +37,10 @@ services:
           - nestjs_dev
   nestjs_prod:
     profiles: ["all", "prod"]
-    image: myt/back-end:prod
+    image: moveyourtable.azurecr.io/back-end
     container_name: Nest.JS-Prod
     ports:
-      - ${NESTJS_PORT}:3000
+      - ${NESTJS_EXPOSE_PORT}:${NESTJS_PORT}
     build:
       dockerfile: ./docker/Nest_Prod_Dockerfile
       context: .
@@ -50,18 +50,18 @@ services:
       - rabbitmq_dev
       - rabbitmq_prod
     environment:
-      - NESTJS_PORT=3000
-      - MONGO_ENDPOINT=mongodb
-      - MONGO_PORT=27017
-      - MONGO_ROOT_USERNAME=${MONGO_ROOT_USERNAME}
-      - MONGO_ROOT_PASSWORD=${MONGO_ROOT_PASSWORD}
-      - MONGO_INIT_DB=${MONGO_INIT_DB}
-      - RABBITMQ_ENDPOINT=rabbitmq
-      - RABBITMQ_PORT=5672
-      - AUTOMATE_ENDPOINT=rust
-      - AUTOMATE_PORT=3030
-      - GATEWAY_ENDPOINT=tsed
-      - GATEWAY_PORT=8080
+      - NESTJS_PORT=${NESTJS_PORT}
+      - MONGO_ENDPOINT=${DOCKER_MONGO_ENDPOINT}
+      - MONGO_PORT=${DOCKER_MONGO_PORT}
+      - MONGO_USERNAME=${DOCKER_MONGO_ROOT_USERNAME}
+      - MONGO_PASSWORD=${DOCKER_MONGO_ROOT_PASSWORD}
+      - MONGO_DB=${DOCKER_MONGO_INIT_DB}
+      - RABBITMQ_ENDPOINT=${DOCKER_RABBITMQ_ENDPOINT}
+      - RABBITMQ_PORT=${DOCKER_RABBITMQ_PORT}
+      - AUTOMATE_ENDPOINT=${DOCKER_AUTOMATE_ENDPOINT}
+      - AUTOMATE_PORT=${DOCKER_AUTOMATE_PORT}
+      - GATEWAY_ENDPOINT=${DOCKER_GATEWAY_ENDPOINT}
+      - GATEWAY_PORT=${DOCKER_GATEWAY_PORT}
     networks:
       default:
         aliases:
@@ -73,8 +73,8 @@ services:
     image: rabbitmq:3.9.10-management-alpine
     container_name: RabbitMQ-Dev
     ports:
-      - ${RABBITMQ_EXTERNAL_PORT}:5672
-      - ${RABBITMQ_EXTERNAL_MANAGEMENT_PORT}:15672
+      - ${DOCKER_RABBITMQ_EXTERNAL_PORT}:5672
+      - ${DOCKER_RABBITMQ_EXTERNAL_MANAGEMENT_PORT}:15672
     networks:
       default:
         aliases:
@@ -98,11 +98,11 @@ services:
       dockerfile: ./docker/Mongo_Dockerfile
       context: .
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-      MONGO_INIT_DB: ${MONGO_INIT_DB}
+      MONGO_INITDB_ROOT_USERNAME: ${DOCKER_MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DOCKER_MONGO_ROOT_PASSWORD}
+      MONGO_INIT_DB: ${DOCKER_MONGO_INIT_DB}
     ports:
-      - ${MONGO_EXTERNAL_PORT}:27017
+      - ${DOCKER_MONGO_EXTERNAL_PORT}:27017
     networks:
       default:
         aliases:
@@ -113,9 +113,9 @@ services:
     image: mongo:5.0.4
     container_name: MongoDB-Prod
     environment:
-      MONGO_INITDB_ROOT_USERNAME: ${MONGO_ROOT_USERNAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_ROOT_PASSWORD}
-      MONGO_INIT_DB: ${MONGO_INIT_DB}
+      MONGO_INITDB_ROOT_USERNAME: ${DOCKER_MONGO_ROOT_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DOCKER_MONGO_ROOT_PASSWORD}
+      MONGO_INIT_DB: ${DOCKER_MONGO_INIT_DB}
     networks:
       default:
         aliases:

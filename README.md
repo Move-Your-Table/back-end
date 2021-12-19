@@ -57,18 +57,21 @@ Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/proje
 ## `.env` configuration
 > :bulb: An example `.env` is available! Copy `.env.example` and rename it to `.env` to get started.
 
-|Key|Value explanation|Required for Development?|... Staging?|... Production?|Value example|
-|---|---|---|---|---|---|
-|COMPOSE_PROJECT_NAME|Name of the compose stack|✖|✖|✖|"MYT Back-end Server"|
-|||||||
-|NESTJS_PORT|The port used to reach the application from external networks|✔* </br> *\*If the code's running locally*|✖|✖|3000|
-|MONGO_ENDPOINT|The endpoint used by the application to reach the MongoDB|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
-|MONGO_PORT|The port used by the application to reach the MongoDB|✔* </br> *\*If the code's running locally*|✖|✖|27017|
-|AUTOMATE_ENDPOINT|The endpoint used by the application to reach the automate server|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
-|AUTOMATE_PORT|The port used by the application to reach the automate server|✔* </br> *\*If the code's running locally*|✖|✖|3000|
-|GATEWAY_ENDPOINT|The endpoint used by the application to reach the gateway server|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
-|GATEWAY_PORT|The port used by the application to reach the gateway server|✔* </br> *\*If the code's running locally*|✖|✖|3000|
-|||||||
+|Key|Value explanation|Value example|
+|---|---|---|
+|COMPOSE_PROJECT_NAME|Name of the compose stack|"MYT Back-end Server"|
+||||
+|NESTJS_PORT|The port used to reach the application from external networks|3000|
+|MONGO_ENDPOINT|The endpoint used by the application to reach the MongoDB|localhost|
+|MONGO_PORT|The port used by the application to reach the MongoDB|27017|
+|MONGO_ROOT_USERNAME|The username that the app uses to access the database|root|
+|MONGO_ROOT_PASSWORD|The username that the app uses to access the database|zXnpa&VDpoj6RU|
+|MONGO_INIT_DB|The name of the database the app uses|✔|✔|✔|MYT|
+|AUTOMATE_ENDPOINT|The endpoint used by the application to reach the automate server|localhost|
+|AUTOMATE_PORT|The port used by the application to reach the automate server|3000|
+|GATEWAY_ENDPOINT|The endpoint used by the application to reach the gateway server|localhost|
+|GATEWAY_PORT|The port used by the application to reach the gateway server|3000|
+||||
 |MONGO_ROOT_USERNAME|The name of the root user of the database|✔|✔|✔|root|
 |MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|✔|✔|zXnpa&VDpoj6RU|
 |MONGO_INIT_DB|The name of the database being used|✔|✔|✔|MYT|
