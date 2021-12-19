@@ -24,7 +24,7 @@ import { GraphQLError } from 'graphql';
     DesksModule,
     IncidentReportsModule,
     MongooseModule.forRoot(
-      `mongodb://${process.env.MONGO_ROOT_USERNAME}:${process.env.MONGO_ROOT_PASSWORD}@${process.env.MONGO_ENDPOINT}:${process.env.MONGO_PORT}/${process.env.MONGO_INIT_DB}?authSource=admin`,
+      `mongodb://${process.env.MONGO_USERNAME}:${process.env.MONGO_PASSWORD}@${process.env.MONGO_ENDPOINT}:${process.env.MONGO_PORT}/${process.env.MONGO_DB}?${process.env.MONGO_OPTIONS}`,
     ),
     forwardRef(() => BookingsModule),
   ],
