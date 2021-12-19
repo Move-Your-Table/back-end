@@ -47,7 +47,6 @@ Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/proje
 |`npm run start:local:prod`|Starts a production-ready server, where **the app is runned locally**, but the needed containers are started.|
 |||
 |`yarn run start:container:dev`|Starts a containerized development server, **with** hot-reloading capabilities & necessary containers|
-|`yarn run start:container:staging`|Starts a containerized staging server.|
 |`yarn run start:container:prod`|Starts a containerized production server.|
 |||
 |`yarn run test`|Runs all unit tests|
