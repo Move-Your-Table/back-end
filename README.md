@@ -64,21 +64,32 @@ Because [Gateway](https://git.ti.howest.be/TI/2021-2022/s5/trending-topics/proje
 |NESTJS_PORT|The port used to reach the application from external networks|3000|
 |MONGO_ENDPOINT|The endpoint used by the application to reach the MongoDB|localhost|
 |MONGO_PORT|The port used by the application to reach the MongoDB|27017|
-|MONGO_ROOT_USERNAME|The username that the app uses to access the database|root|
-|MONGO_ROOT_PASSWORD|The username that the app uses to access the database|zXnpa&VDpoj6RU|
-|MONGO_INIT_DB|The name of the database the app uses|✔|✔|✔|MYT|
+|MONGO_USERNAME|The username that the app uses to access the database|root|
+|MONGO_PASSWORD|The username that the app uses to access the database|zXnpa&VDpoj6RU|
+|MONGO_DB|The name of the database the app uses|MYT|
 |AUTOMATE_ENDPOINT|The endpoint used by the application to reach the automate server|localhost|
 |AUTOMATE_PORT|The port used by the application to reach the automate server|3000|
 |GATEWAY_ENDPOINT|The endpoint used by the application to reach the gateway server|localhost|
 |GATEWAY_PORT|The port used by the application to reach the gateway server|3000|
+|RABBITMQ_ENDPOINT|The address used by the app to reach Rabbit MQ|localhost|
+|RABBITMQ_PORT|The port used by the app to communicate with Rabbit MQ|5672|
 ||||
-|MONGO_ROOT_USERNAME|The name of the root user of the database|✔|✔|✔|root|
-|MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB|✔|✔|✔|zXnpa&VDpoj6RU|
-|MONGO_INIT_DB|The name of the database being used|✔|✔|✔|MYT|
-|MONGO_EXTERNAL_PORT|The external port used to reach the database from a **external** network|✔|✔|✖|27017|
-|||||||
-|RABBITMQ_ENDPOINT|The address used **within** the container network to reach Rabbit MQ|✔* </br> *\*If the code's running locally*|✖|✖|localhost|
-|RABBITMQ_PORT|The port used **within** the container network to communicate with Rabbit MQ|✔* </br> *\*If the code's running locally*|✖|✖|5672|
-|RABBITMQ_EXTERNAL_PORT|The port used **outside** the container network to communicate with Rabbit MQ|✔|✔|✖|5672|
-|RABBITMQ_EXTERNAL_MANAGEMENT_PORT|The port used **outside** the container network to communicate with Rabbit MQ|✔|✔|✖|15672|
+|NESTJS_EXPOSE_PORT|The port the app is exposed **through the container**|3030|
+|DOCKER_MONGO_ROOT_USERNAME|The name of the root user of the MongoDB container|root|
+|DOCKER_MONGO_ROOT_PASSWORD|The password of the root user of the MongoDB container|zXnpa&VDpoj6RU|
+|DOCKER_MONGO_INIT_DB|The name of the database within the MongoDB Container|MYT|
+|DOCKER_MONGO_EXTERNAL_PORT|The external port used to reach the MongoDB container from a **external** network|27017|
+|DOCKER_MONGO_ENDPOINT|The endpoint used by the application to reach the database **within the container**|localhost|
+|DOCKER_MONGO_PORT|The port used by the application to reach the database **within the container**|27017|
+|DOCKER_MONGO_USERNAME|The username that the app uses to access the database **within the container**|root|
+|DOCKER_MONGO_PASSWORD|The username that the app uses to access the database **within the container**|zXnpa&VDpoj6RU|
+|DOCKER_MONGO_DB|The name of the database the app uses **within the container**|MYT|
+|DOCKER_AUTOMATE_ENDPOINT|The endpoint used by the application to reach the automate server **within the container**|localhost|
+|DOCKER_AUTOMATE_PORT|The port used by the application to reach the automate server **within the container**|3000|
+|DOCKER_GATEWAY_ENDPOINT|The endpoint used by the application to reach the gateway server **within the container**|localhost|
+|DOCKER_GATEWAY_PORT|The port used by the application to reach the gateway server **within the container**|3000|
+|DOCKER_RABBITMQ_ENDPOINT|The address used by the app to reach Rabbit MQ **within the container**|localhost|
+|DOCKER_RABBITMQ_PORT|The port used by the app to communicate with Rabbit MQ **within the container**|5672|
+|DOCKER_RABBITMQ_EXTERNAL_PORT|The port used **outside** the container network to communicate with Rabbit MQ **within the container**|5672|
+|DOCKER_RABBITMQ_EXTERNAL_MANAGEMENT_PORT|The port used **outside** the container network to communicate with Rabbit MQ **within the container**|15672|
 
