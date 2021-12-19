@@ -1,4 +1,4 @@
-FROM node:lts-alpine3.14 AS build
+FROM node:lts AS build
 
 WORKDIR /usr/src/app
 COPY package.json ./
@@ -6,6 +6,7 @@ COPY yarn.lock ./
 RUN yarn install --only=development
 RUN yarn add glob rimraf
 COPY . .
+RUN yarn prebuild
 RUN yarn build
 
 FROM node:lts-alpine3.14 as prod

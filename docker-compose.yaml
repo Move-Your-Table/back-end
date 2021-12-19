@@ -26,13 +26,17 @@ services:
       - MONGO_INIT_DB=${MONGO_INIT_DB}
       - RABBITMQ_ENDPOINT=rabbitmq
       - RABBITMQ_PORT=5672
+      - AUTOMATE_ENDPOINT=rust
+      - AUTOMATE_PORT=3030
+      - GATEWAY_ENDPOINT=tsed
+      - GATEWAY_PORT=8080
     networks:
       default:
         aliases:
           - nestjs
           - nestjs_dev
   nestjs_prod:
-    profiles: ["all", "prod", "staging"]
+    profiles: ["all", "prod"]
     image: myt/back-end:prod
     container_name: Nest.JS-Prod
     ports:
@@ -65,7 +69,7 @@ services:
           - nestjs_prod
   
   rabbitmq_dev:
-    profiles: ["dev-local", "dev-container", "all", "staging"]
+    profiles: ["dev-local", "dev-container", "all"]
     image: rabbitmq:3.9.10-management-alpine
     container_name: RabbitMQ-Dev
     ports:
@@ -87,7 +91,7 @@ services:
           - rabbitmq_prod
   
   mongodb_dev:
-    profiles: ["dev-local", "dev-container", "all", "staging"]
+    profiles: ["dev-local", "dev-container", "all"]
     image: myt/back-end-db:1.0
     container_name: MongoDB-Dev
     build:

@@ -16,7 +16,7 @@ import { GraphQLError } from 'graphql';
     ConfigModule.forRoot(),
     GraphQLModule.forRoot({
       autoSchemaFile: 'schema.gql',
-      playground: true,
+      playground: !(process.env.NODE_ENV === "production"),
       formatError: handleGraphQLError
     }),
     BuildingsModule,
